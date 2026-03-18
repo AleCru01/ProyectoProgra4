@@ -10,12 +10,12 @@ import java.awt.Color;
  *
  * @author victo
  */
-public class InicioSesion extends javax.swing.JFrame  {
+public class Registrarse extends javax.swing.JFrame  {
 
     /**
      * Creates new form InicioSesion
      */
-    public InicioSesion() {
+    public Registrarse() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -38,10 +38,8 @@ public class InicioSesion extends javax.swing.JFrame  {
         jSeparator2 = new javax.swing.JSeparator();
         Boton = new JPanelRedondeado();
         jLabel5 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         Cerrar = new javax.swing.JPanel();
         closeText = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -106,16 +104,16 @@ public class InicioSesion extends javax.swing.JFrame  {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Iniciar Sesión");
+        jLabel5.setText("Registrarse");
 
         javax.swing.GroupLayout BotonLayout = new javax.swing.GroupLayout(Boton);
         Boton.setLayout(BotonLayout);
         BotonLayout.setHorizontalGroup(
             BotonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BotonLayout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(64, 64, 64)
                 .addComponent(jLabel5)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         BotonLayout.setVerticalGroup(
             BotonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,17 +123,7 @@ public class InicioSesion extends javax.swing.JFrame  {
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
-        jPanel2.add(Boton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 220, 40));
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(102, 102, 255));
-        jLabel8.setText("REGISTRATE");
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, -1, -1));
+        jPanel2.add(Boton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 220, 40));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
@@ -146,11 +134,6 @@ public class InicioSesion extends javax.swing.JFrame  {
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Contraseña:");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel11.setText("¿Aún no tienes una cuenta?");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, -1, -1));
 
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 290, 360));
 
@@ -231,12 +214,6 @@ public class InicioSesion extends javax.swing.JFrame  {
         System.exit(0);
     }//GEN-LAST:event_CerrarMouseClicked
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-        Registrarse nuevoUsuario = new Registrarse();
-        nuevoUsuario.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jLabel8MouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -254,20 +231,21 @@ public class InicioSesion extends javax.swing.JFrame  {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InicioSesion().setVisible(true);
+                new Registrarse().setVisible(true);
             }
         });
     }
@@ -279,11 +257,9 @@ public class InicioSesion extends javax.swing.JFrame  {
     private javax.swing.JTextField Usuario;
     private javax.swing.JLabel closeText;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
