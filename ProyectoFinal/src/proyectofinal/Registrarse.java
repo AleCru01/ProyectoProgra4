@@ -40,6 +40,7 @@ public class Registrarse extends javax.swing.JFrame  {
         jLabel5 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         Cerrar = new javax.swing.JPanel();
         closeText = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -135,6 +136,14 @@ public class Registrarse extends javax.swing.JFrame  {
         jLabel10.setText("Contraseña:");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
+        jButton1.setText("jButton1");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, -1, -1));
+
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 290, 360));
 
         Cerrar.setBackground(new java.awt.Color(172, 101, 39));
@@ -214,6 +223,10 @@ public class Registrarse extends javax.swing.JFrame  {
         System.exit(0);
     }//GEN-LAST:event_CerrarMouseClicked
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -256,6 +269,7 @@ public class Registrarse extends javax.swing.JFrame  {
     private javax.swing.JPasswordField Contra;
     private javax.swing.JTextField Usuario;
     private javax.swing.JLabel closeText;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
