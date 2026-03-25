@@ -224,6 +224,7 @@ public class Registrarse extends javax.swing.JFrame  {
     }//GEN-LAST:event_CerrarMouseClicked
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1MouseClicked
@@ -263,6 +264,10 @@ public class Registrarse extends javax.swing.JFrame  {
             }
         });
     }
+=======
+    
+   
+>>>>>>> Stashed changes
 =======
     
    
