@@ -15,7 +15,6 @@ public class PaginaPrincipal extends javax.swing.JFrame {
      */
     public PaginaPrincipal(String usuario) {
         initComponents();
-        this.setLocationRelativeTo(null);
     }
 
     /**
