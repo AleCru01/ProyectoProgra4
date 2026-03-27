@@ -156,7 +156,7 @@ public class Registrarse extends javax.swing.JFrame  {
         closeText.setText("x");
         Cerrar.add(closeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
 
-        jPanel3.add(Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 30));
+        jPanel3.add(Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 30, 30));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Inicio.jpg"))); // NOI18N
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, -1, -1));

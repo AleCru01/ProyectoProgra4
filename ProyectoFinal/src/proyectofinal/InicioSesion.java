@@ -96,6 +96,9 @@ public class InicioSesion extends javax.swing.JFrame  {
         Boton.setBackground(new java.awt.Color(172, 101, 39));
         Boton.setToolTipText("Hola");
         Boton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BotonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 BotonMouseEntered(evt);
             }
@@ -173,7 +176,7 @@ public class InicioSesion extends javax.swing.JFrame  {
         closeText.setText("x");
         Cerrar.add(closeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
 
-        jPanel3.add(Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 30, 30));
+        jPanel3.add(Cerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 30, 30));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Inicio.jpg"))); // NOI18N
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, -1, -1));
@@ -236,6 +239,13 @@ public class InicioSesion extends javax.swing.JFrame  {
         nuevoUsuario.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void BotonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonMouseClicked
+        System.out.println("Se dio click");
+        PanelAdministrador panel = new PanelAdministrador();
+        panel.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_BotonMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Boton;
