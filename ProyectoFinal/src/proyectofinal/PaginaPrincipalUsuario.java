@@ -8,12 +8,12 @@ package proyectofinal;
  *
  * @author victo
  */
-public class PaginaPrincipal extends javax.swing.JFrame {
+public class PaginaPrincipalUsuario extends javax.swing.JFrame {
 
     /**
      * Creates new form PaginaPrincipal
      */
-    public PaginaPrincipal(String usuario) {
+    public PaginaPrincipalUsuario(String usuario) {
         initComponents();
     }
 
