@@ -40,7 +40,6 @@ public class Registrarse extends javax.swing.JFrame  {
         jLabel5 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         Cerrar = new javax.swing.JPanel();
         closeText = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -136,14 +135,6 @@ public class Registrarse extends javax.swing.JFrame  {
         jLabel10.setText("Contraseña:");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
-        jButton1.setText("jButton1");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, -1, -1));
-
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 290, 360));
 
         Cerrar.setBackground(new java.awt.Color(172, 101, 39));
@@ -175,36 +166,6 @@ public class Registrarse extends javax.swing.JFrame  {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ContraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ContraMouseClicked
-        // TODO add your handling code here:
-        Contra.setText("");
-        Contra.setForeground(Color.BLACK);
-    }//GEN-LAST:event_ContraMouseClicked
-
-    private void ContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContraActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ContraActionPerformed
-
-    private void UsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UsuarioMouseClicked
-        // TODO add your handling code here:
-        Usuario.setText("");
-        Usuario.setForeground(Color.BLACK);
-    }//GEN-LAST:event_UsuarioMouseClicked
-
-    private void UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_UsuarioActionPerformed
-
-    private void BotonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonMouseEntered
-        // TODO add your handling code here:
-        Boton.setBackground(Color.decode("#CB8B44"));
-    }//GEN-LAST:event_BotonMouseEntered
-
-    private void BotonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonMouseExited
-        // TODO add your handling code here:
-        Boton.setBackground(Color.decode("#AC6527"));
-    }//GEN-LAST:event_BotonMouseExited
-
     private void CerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CerrarMouseEntered
         // TODO add your handling code here:
         Cerrar.setBackground(Color.red);
@@ -223,45 +184,37 @@ public class Registrarse extends javax.swing.JFrame  {
         System.exit(0);
     }//GEN-LAST:event_CerrarMouseClicked
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void BotonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1MouseClicked
+        Boton.setBackground(Color.decode("#AC6527"));
+    }//GEN-LAST:event_BotonMouseExited
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Registrarse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void BotonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonMouseEntered
+        // TODO add your handling code here:
+        Boton.setBackground(Color.decode("#CB8B44"));
+    }//GEN-LAST:event_BotonMouseEntered
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Registrarse().setVisible(true);
-            }
-        });
-    }
+    private void UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UsuarioActionPerformed
+
+    private void UsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UsuarioMouseClicked
+        // TODO add your handling code here:
+        Usuario.setText("");
+        Usuario.setForeground(Color.BLACK);
+    }//GEN-LAST:event_UsuarioMouseClicked
+
+    private void ContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ContraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ContraActionPerformed
+
+    private void ContraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ContraMouseClicked
+        // TODO add your handling code here:
+        Contra.setText("");
+        Contra.setForeground(Color.BLACK);
+    }//GEN-LAST:event_ContraMouseClicked
+
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -270,7 +223,6 @@ public class Registrarse extends javax.swing.JFrame  {
     private javax.swing.JPasswordField Contra;
     private javax.swing.JTextField Usuario;
     private javax.swing.JLabel closeText;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
