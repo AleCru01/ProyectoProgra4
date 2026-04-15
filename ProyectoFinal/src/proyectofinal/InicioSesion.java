@@ -4,6 +4,7 @@
  */
 package proyectofinal;
 
+import proyectofinal.navegacion.PanelAdministrador;
 import java.awt.Color;
 
 /**

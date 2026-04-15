@@ -38,5 +38,6 @@ public class JPanelRedondeado extends JPanel {
         g2.setColor(getBackground());
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), arcWidth, arcHeight);
         g2.dispose();
+        
     }
 }
