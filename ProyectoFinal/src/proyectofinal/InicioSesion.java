@@ -6,6 +6,7 @@ package proyectofinal;
 
 import proyectofinal.navegacion.PanelAdministrador;
 import java.awt.Color;
+import proyectofinal.navegacion.PaginaPrincipalUsuario;
 
 /**
  *
@@ -243,7 +244,7 @@ public class InicioSesion extends javax.swing.JFrame  {
 
     private void BotonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonMouseClicked
         System.out.println("Se dio click");
-        PanelAdministrador panel = new PanelAdministrador();
+        PaginaPrincipalUsuario panel = new PaginaPrincipalUsuario("");
         panel.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_BotonMouseClicked
