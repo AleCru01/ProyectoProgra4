@@ -243,9 +243,13 @@ public class InicioSesion extends javax.swing.JFrame  {
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void BotonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BotonMouseClicked
-        System.out.println("Se dio click");
-        PaginaPrincipalUsuario panel = new PaginaPrincipalUsuario("");
-        panel.setVisible(true);
+        if(Usuario.getText().equals("admin")){
+            PanelAdministrador panel = new PanelAdministrador();
+            panel.setVisible(true);
+        }else if(Usuario.getText().equals("user")){
+            PaginaPrincipalUsuario panel = new PaginaPrincipalUsuario("");
+            panel.setVisible(true);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_BotonMouseClicked
 
