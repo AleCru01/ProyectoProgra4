@@ -18,9 +18,9 @@ import proyectofinal.Vuelo;
 public class PaginaPrincipalUsuario extends javax.swing.JFrame {
     // Colores solicitados
 
-    private final Color COLOR_DISPONIBLE = new Color(226, 130, 255); // Morado
-    private final Color COLOR_RESERVADO = new Color(207, 27, 27);  // Rojo
-    private final Color COLOR_SELECCIONADO = new Color(145, 224, 255);         // Azul
+    private final Color COLOR_DISPONIBLE = new Color(153, 255, 153); // Morado
+    private final Color COLOR_RESERVADO = new  Color(102, 102, 102);// Griss
+    private final Color COLOR_SELECCIONADO = new Color(226, 130, 255);         // Azul
     private Vuelo vueloSeleccionado;
     private String nombreUsuario;
     private int idUsuario;
@@ -34,6 +34,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         jLabel2.setText("Bienvenido, " + usuario);
         jLabel7.setText("Comprar Boletos: " + vuelo.getNumeroVuelo() + " (" + vuelo.getOrigen() + " - " + vuelo.getDestino() + ")");
         inicializarAsientos();
+        
     }
 
     private void PasarPorEncima(JPanel panel) {
@@ -64,7 +65,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         // 1. Todo a color disponible inicialmente
         while (i < componentes.length) {
             Component comp = componentes[i];
-            if (comp instanceof JPanelRedondeado) {
+            if (comp instanceof JPanelRedondeado ) {
                 comp.setBackground(COLOR_DISPONIBLE);
             }
             i++;
@@ -75,32 +76,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         }
 
         // 2. Traer los ocupados desde la base de datos
-        String sql = "SELECT numero_asiento FROM reserva WHERE id_vuelo = ?";
-        try (Connection con = ConexionBD.getConnection(); PreparedStatement pst = con.prepareStatement(sql)) {
-
-            pst.setInt(1, vueloSeleccionado.getIdVuelo());
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-                String asientoBD = rs.getString("numero_asiento");
-
-                int j = 0;
-                while (j < componentes.length) {
-                    Component comp = componentes[j];
-                    if (comp instanceof JPanelRedondeado) {
-                        JPanelRedondeado asiento = (JPanelRedondeado) comp;
-                        // Validar si el nombre del JPanel coincide con la BD
-                        if (asientoBD != null && asientoBD.equals(asiento.getName())) {
-                            asiento.setBackground(COLOR_RESERVADO);
-                        }
-                    }
-                    j++;
-                }
-            }
-            Avion.repaint();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        
     }
 
     private void confirmarReserva() {
@@ -168,31 +144,27 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         AvionAsientos = new javax.swing.JPanel();
         Avion = new JPanelRedondeado();
         jPanel2 = new JPanelRedondeado();
-        jPanel6 = new JPanelRedondeado();
         asientoA0 = new JPanelRedondeado();
         asientoA1 = new JPanelRedondeado();
-        asientoA2 = new JPanelRedondeado();
-        asientoA3 = new JPanelRedondeado();
-        asientoA6 = new JPanelRedondeado();
-        asientoA4 = new JPanelRedondeado();
-        asientoA5 = new JPanelRedondeado();
-        asientoA7 = new JPanelRedondeado();
-        asientoA12 = new JPanelRedondeado();
         asientoA14 = new JPanelRedondeado();
-        asientoA10 = new JPanelRedondeado();
         asientoA15 = new JPanelRedondeado();
-        asientoA13 = new JPanelRedondeado();
-        asientoA8 = new JPanelRedondeado();
-        asientoA9 = new JPanelRedondeado();
-        asientoA11 = new JPanelRedondeado();
-        asientoA21 = new JPanelRedondeado();
-        asientoA16 = new JPanelRedondeado();
         asientoA17 = new JPanelRedondeado();
-        asientoA22 = new JPanelRedondeado();
+        asientoA2 = new JPanelRedondeado();
+        asientoA16 = new JPanelRedondeado();
+        asientoA3 = new JPanelRedondeado();
+        asientoA4 = new JPanelRedondeado();
+        asientoA20 = new JPanelRedondeado();
+        asientoA5 = new JPanelRedondeado();
+        asientoA6 = new JPanelRedondeado();
+        asientoA7 = new JPanelRedondeado();
+        asientoA21 = new JPanelRedondeado();
+        asientoA8 = new JPanelRedondeado();
         asientoA23 = new JPanelRedondeado();
+        asientoA10 = new JPanelRedondeado();
+        asientoA11 = new JPanelRedondeado();
         asientoA18 = new JPanelRedondeado();
         asientoA19 = new JPanelRedondeado();
-        asientoA20 = new JPanelRedondeado();
+        asientoA9 = new JPanelRedondeado();
         asientoA26 = new JPanelRedondeado();
         asientoA31 = new JPanelRedondeado();
         asientoA25 = new JPanelRedondeado();
@@ -206,7 +178,6 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         asientoA33 = new JPanelRedondeado();
         asientoA37 = new JPanelRedondeado();
         asientoA35 = new JPanelRedondeado();
-        asientoA36 = new JPanelRedondeado();
         asientoA38 = new JPanelRedondeado();
         asientoA39 = new JPanelRedondeado();
         asientoA47 = new JPanelRedondeado();
@@ -221,6 +192,14 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         asientoA48 = new JPanelRedondeado();
         asientoA51 = new JPanelRedondeado();
         asientoA50 = new JPanelRedondeado();
+        asientoA53 = new JPanelRedondeado();
+        asientoA12 = new JPanelRedondeado();
+        asientoA13 = new JPanelRedondeado();
+        asientoA22 = new JPanelRedondeado();
+        asientoA36 = new JPanelRedondeado();
+        asientoA52 = new JPanelRedondeado();
+        asientoA54 = new JPanelRedondeado();
+        asientoA55 = new JPanelRedondeado();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -411,21 +390,6 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
 
         Avion.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 570, -1));
 
-        jPanel6.setBackground(new java.awt.Color(199, 240, 255));
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 90, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        Avion.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 90, 100));
-
         asientoA0.setBackground(new java.awt.Color(153, 255, 153));
         asientoA0.setPreferredSize(new java.awt.Dimension(40, 40));
         asientoA0.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -486,216 +450,6 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
 
         Avion.add(asientoA1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 30, 30));
 
-        asientoA2.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA2.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA2MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA2MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA2Layout = new javax.swing.GroupLayout(asientoA2);
-        asientoA2.setLayout(asientoA2Layout);
-        asientoA2Layout.setHorizontalGroup(
-            asientoA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA2Layout.setVerticalGroup(
-            asientoA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 30, 30));
-
-        asientoA3.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA3.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA3MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA3MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA3MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA3MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA3Layout = new javax.swing.GroupLayout(asientoA3);
-        asientoA3.setLayout(asientoA3Layout);
-        asientoA3Layout.setHorizontalGroup(
-            asientoA3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA3Layout.setVerticalGroup(
-            asientoA3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 30, 30));
-
-        asientoA6.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA6.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA6MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA6MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA6MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA6MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA6Layout = new javax.swing.GroupLayout(asientoA6);
-        asientoA6.setLayout(asientoA6Layout);
-        asientoA6Layout.setHorizontalGroup(
-            asientoA6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA6Layout.setVerticalGroup(
-            asientoA6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 30, 30));
-
-        asientoA4.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA4.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA4MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA4MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA4MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA4MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA4Layout = new javax.swing.GroupLayout(asientoA4);
-        asientoA4.setLayout(asientoA4Layout);
-        asientoA4Layout.setHorizontalGroup(
-            asientoA4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA4Layout.setVerticalGroup(
-            asientoA4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 30, 30));
-
-        asientoA5.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA5.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA5MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA5MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA5MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA5MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA5Layout = new javax.swing.GroupLayout(asientoA5);
-        asientoA5.setLayout(asientoA5Layout);
-        asientoA5Layout.setHorizontalGroup(
-            asientoA5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA5Layout.setVerticalGroup(
-            asientoA5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 30, 30));
-
-        asientoA7.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA7.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA7MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA7MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA7MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA7MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA7Layout = new javax.swing.GroupLayout(asientoA7);
-        asientoA7.setLayout(asientoA7Layout);
-        asientoA7Layout.setHorizontalGroup(
-            asientoA7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA7Layout.setVerticalGroup(
-            asientoA7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 30, 30));
-
-        asientoA12.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA12.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA12MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA12MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA12MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA12MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA12Layout = new javax.swing.GroupLayout(asientoA12);
-        asientoA12.setLayout(asientoA12Layout);
-        asientoA12Layout.setHorizontalGroup(
-            asientoA12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA12Layout.setVerticalGroup(
-            asientoA12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA12, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 30, 30));
-
         asientoA14.setBackground(new java.awt.Color(153, 255, 153));
         asientoA14.setPreferredSize(new java.awt.Dimension(40, 40));
         asientoA14.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -724,37 +478,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA14, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 30, 30));
-
-        asientoA10.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA10.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA10MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA10MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA10MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA10MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA10Layout = new javax.swing.GroupLayout(asientoA10);
-        asientoA10.setLayout(asientoA10Layout);
-        asientoA10Layout.setHorizontalGroup(
-            asientoA10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA10Layout.setVerticalGroup(
-            asientoA10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA10, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 60, 30, 30));
+        Avion.add(asientoA14, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 30, 30));
 
         asientoA15.setBackground(new java.awt.Color(153, 255, 153));
         asientoA15.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -784,187 +508,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA15, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 30, 30));
-
-        asientoA13.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA13.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA13.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA13MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA13MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA13MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA13MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA13Layout = new javax.swing.GroupLayout(asientoA13);
-        asientoA13.setLayout(asientoA13Layout);
-        asientoA13Layout.setHorizontalGroup(
-            asientoA13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA13Layout.setVerticalGroup(
-            asientoA13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA13, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 30, 30));
-
-        asientoA8.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA8.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA8MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA8MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA8MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA8MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA8Layout = new javax.swing.GroupLayout(asientoA8);
-        asientoA8.setLayout(asientoA8Layout);
-        asientoA8Layout.setHorizontalGroup(
-            asientoA8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA8Layout.setVerticalGroup(
-            asientoA8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 30, 30));
-
-        asientoA9.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA9.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA9MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA9MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA9MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA9MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA9Layout = new javax.swing.GroupLayout(asientoA9);
-        asientoA9.setLayout(asientoA9Layout);
-        asientoA9Layout.setHorizontalGroup(
-            asientoA9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA9Layout.setVerticalGroup(
-            asientoA9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA9, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 30, 30));
-
-        asientoA11.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA11.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA11MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA11MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA11MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA11MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA11Layout = new javax.swing.GroupLayout(asientoA11);
-        asientoA11.setLayout(asientoA11Layout);
-        asientoA11Layout.setHorizontalGroup(
-            asientoA11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA11Layout.setVerticalGroup(
-            asientoA11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, 30, 30));
-
-        asientoA21.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA21.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA21.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA21MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA21MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA21MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA21MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA21Layout = new javax.swing.GroupLayout(asientoA21);
-        asientoA21.setLayout(asientoA21Layout);
-        asientoA21Layout.setHorizontalGroup(
-            asientoA21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA21Layout.setVerticalGroup(
-            asientoA21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA21, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 30, 30));
-
-        asientoA16.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA16.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA16.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA16MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA16MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA16MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA16MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA16Layout = new javax.swing.GroupLayout(asientoA16);
-        asientoA16.setLayout(asientoA16Layout);
-        asientoA16Layout.setHorizontalGroup(
-            asientoA16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA16Layout.setVerticalGroup(
-            asientoA16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA16, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 30, 30));
+        Avion.add(asientoA15, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 30, 30));
 
         asientoA17.setBackground(new java.awt.Color(153, 255, 153));
         asientoA17.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -994,127 +538,127 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA17, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 30, 30));
+        Avion.add(asientoA17, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 30, 30));
 
-        asientoA22.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA22.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA22.addMouseListener(new java.awt.event.MouseAdapter() {
+        asientoA2.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA2.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA22MouseClicked(evt);
+                asientoA2MouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA22MouseEntered(evt);
+                asientoA2MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA22MouseExited(evt);
+                asientoA2MouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA22MousePressed(evt);
+                asientoA2MousePressed(evt);
             }
         });
 
-        javax.swing.GroupLayout asientoA22Layout = new javax.swing.GroupLayout(asientoA22);
-        asientoA22.setLayout(asientoA22Layout);
-        asientoA22Layout.setHorizontalGroup(
-            asientoA22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout asientoA2Layout = new javax.swing.GroupLayout(asientoA2);
+        asientoA2.setLayout(asientoA2Layout);
+        asientoA2Layout.setHorizontalGroup(
+            asientoA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 30, Short.MAX_VALUE)
         );
-        asientoA22Layout.setVerticalGroup(
-            asientoA22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        asientoA2Layout.setVerticalGroup(
+            asientoA2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA22, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 30, 30));
+        Avion.add(asientoA2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 30, 30));
 
-        asientoA23.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA23.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA23.addMouseListener(new java.awt.event.MouseAdapter() {
+        asientoA16.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA16.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA16.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA23MouseClicked(evt);
+                asientoA16MouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA23MouseEntered(evt);
+                asientoA16MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA23MouseExited(evt);
+                asientoA16MouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA23MousePressed(evt);
+                asientoA16MousePressed(evt);
             }
         });
 
-        javax.swing.GroupLayout asientoA23Layout = new javax.swing.GroupLayout(asientoA23);
-        asientoA23.setLayout(asientoA23Layout);
-        asientoA23Layout.setHorizontalGroup(
-            asientoA23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout asientoA16Layout = new javax.swing.GroupLayout(asientoA16);
+        asientoA16.setLayout(asientoA16Layout);
+        asientoA16Layout.setHorizontalGroup(
+            asientoA16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 30, Short.MAX_VALUE)
         );
-        asientoA23Layout.setVerticalGroup(
-            asientoA23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        asientoA16Layout.setVerticalGroup(
+            asientoA16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA23, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 30, 30));
+        Avion.add(asientoA16, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 30, 30));
 
-        asientoA18.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA18.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA18.addMouseListener(new java.awt.event.MouseAdapter() {
+        asientoA3.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA3.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA18MouseClicked(evt);
+                asientoA3MouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA18MouseEntered(evt);
+                asientoA3MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA18MouseExited(evt);
+                asientoA3MouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA18MousePressed(evt);
+                asientoA3MousePressed(evt);
             }
         });
 
-        javax.swing.GroupLayout asientoA18Layout = new javax.swing.GroupLayout(asientoA18);
-        asientoA18.setLayout(asientoA18Layout);
-        asientoA18Layout.setHorizontalGroup(
-            asientoA18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout asientoA3Layout = new javax.swing.GroupLayout(asientoA3);
+        asientoA3.setLayout(asientoA3Layout);
+        asientoA3Layout.setHorizontalGroup(
+            asientoA3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 30, Short.MAX_VALUE)
         );
-        asientoA18Layout.setVerticalGroup(
-            asientoA18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        asientoA3Layout.setVerticalGroup(
+            asientoA3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA18, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 60, 30, 30));
+        Avion.add(asientoA3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 30, 30));
 
-        asientoA19.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA19.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA19.addMouseListener(new java.awt.event.MouseAdapter() {
+        asientoA4.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA4.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA19MouseClicked(evt);
+                asientoA4MouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA19MouseEntered(evt);
+                asientoA4MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA19MouseExited(evt);
+                asientoA4MouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA19MousePressed(evt);
+                asientoA4MousePressed(evt);
             }
         });
 
-        javax.swing.GroupLayout asientoA19Layout = new javax.swing.GroupLayout(asientoA19);
-        asientoA19.setLayout(asientoA19Layout);
-        asientoA19Layout.setHorizontalGroup(
-            asientoA19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout asientoA4Layout = new javax.swing.GroupLayout(asientoA4);
+        asientoA4.setLayout(asientoA4Layout);
+        asientoA4Layout.setHorizontalGroup(
+            asientoA4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 30, Short.MAX_VALUE)
         );
-        asientoA19Layout.setVerticalGroup(
-            asientoA19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        asientoA4Layout.setVerticalGroup(
+            asientoA4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA19, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, 30, 30));
+        Avion.add(asientoA4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 30, 30));
 
         asientoA20.setBackground(new java.awt.Color(153, 255, 153));
         asientoA20.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1144,7 +688,337 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA20, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 30, 30));
+        Avion.add(asientoA20, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 60, 30, 30));
+
+        asientoA5.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA5.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA5MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA5MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA5Layout = new javax.swing.GroupLayout(asientoA5);
+        asientoA5.setLayout(asientoA5Layout);
+        asientoA5Layout.setHorizontalGroup(
+            asientoA5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA5Layout.setVerticalGroup(
+            asientoA5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 30, 30));
+
+        asientoA6.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA6.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA6MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA6MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA6MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA6Layout = new javax.swing.GroupLayout(asientoA6);
+        asientoA6.setLayout(asientoA6Layout);
+        asientoA6Layout.setHorizontalGroup(
+            asientoA6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA6Layout.setVerticalGroup(
+            asientoA6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 30, 30));
+
+        asientoA7.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA7.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA7MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA7MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA7MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA7Layout = new javax.swing.GroupLayout(asientoA7);
+        asientoA7.setLayout(asientoA7Layout);
+        asientoA7Layout.setHorizontalGroup(
+            asientoA7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA7Layout.setVerticalGroup(
+            asientoA7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, 30, 30));
+
+        asientoA21.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA21.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA21.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA21MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA21MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA21MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA21MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA21Layout = new javax.swing.GroupLayout(asientoA21);
+        asientoA21.setLayout(asientoA21Layout);
+        asientoA21Layout.setHorizontalGroup(
+            asientoA21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA21Layout.setVerticalGroup(
+            asientoA21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA21, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 30, 30));
+
+        asientoA8.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA8.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA8MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA8MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA8MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA8Layout = new javax.swing.GroupLayout(asientoA8);
+        asientoA8.setLayout(asientoA8Layout);
+        asientoA8Layout.setHorizontalGroup(
+            asientoA8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA8Layout.setVerticalGroup(
+            asientoA8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 30, 30));
+
+        asientoA23.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA23.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA23.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA23MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA23MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA23MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA23MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA23Layout = new javax.swing.GroupLayout(asientoA23);
+        asientoA23.setLayout(asientoA23Layout);
+        asientoA23Layout.setHorizontalGroup(
+            asientoA23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA23Layout.setVerticalGroup(
+            asientoA23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA23, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 30, 30));
+
+        asientoA10.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA10.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA10MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA10MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA10MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA10MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA10Layout = new javax.swing.GroupLayout(asientoA10);
+        asientoA10.setLayout(asientoA10Layout);
+        asientoA10Layout.setHorizontalGroup(
+            asientoA10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA10Layout.setVerticalGroup(
+            asientoA10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA10, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 30, 30));
+
+        asientoA11.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA11.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA11MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA11MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA11MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA11MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA11Layout = new javax.swing.GroupLayout(asientoA11);
+        asientoA11.setLayout(asientoA11Layout);
+        asientoA11Layout.setHorizontalGroup(
+            asientoA11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA11Layout.setVerticalGroup(
+            asientoA11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA11, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 30, 30));
+
+        asientoA18.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA18.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA18MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA18MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA18MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA18MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA18Layout = new javax.swing.GroupLayout(asientoA18);
+        asientoA18.setLayout(asientoA18Layout);
+        asientoA18Layout.setHorizontalGroup(
+            asientoA18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA18Layout.setVerticalGroup(
+            asientoA18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA18, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 30, 30));
+
+        asientoA19.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA19.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA19MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA19MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA19MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA19MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA19Layout = new javax.swing.GroupLayout(asientoA19);
+        asientoA19.setLayout(asientoA19Layout);
+        asientoA19Layout.setHorizontalGroup(
+            asientoA19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA19Layout.setVerticalGroup(
+            asientoA19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA19, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 30, 30));
+
+        asientoA9.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA9.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA9MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA9MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA9MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA9MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA9Layout = new javax.swing.GroupLayout(asientoA9);
+        asientoA9.setLayout(asientoA9Layout);
+        asientoA9Layout.setHorizontalGroup(
+            asientoA9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA9Layout.setVerticalGroup(
+            asientoA9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA9, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 30, 30));
 
         asientoA26.setBackground(new java.awt.Color(153, 255, 153));
         asientoA26.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1174,7 +1048,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA26, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 30, 30));
+        Avion.add(asientoA26, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 60, 30, 30));
 
         asientoA31.setBackground(new java.awt.Color(153, 255, 153));
         asientoA31.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1204,7 +1078,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA31, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 30, 30));
+        Avion.add(asientoA31, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 30, 30));
 
         asientoA25.setBackground(new java.awt.Color(153, 255, 153));
         asientoA25.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1234,7 +1108,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA25, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 30, 30));
+        Avion.add(asientoA25, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 30, 30));
 
         asientoA28.setBackground(new java.awt.Color(153, 255, 153));
         asientoA28.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1264,7 +1138,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA28, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 30, 30));
+        Avion.add(asientoA28, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 30, 30));
 
         asientoA30.setBackground(new java.awt.Color(153, 255, 153));
         asientoA30.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1294,7 +1168,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA30, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 30, 30));
+        Avion.add(asientoA30, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 30, 30));
 
         asientoA29.setBackground(new java.awt.Color(153, 255, 153));
         asientoA29.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1324,7 +1198,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA29, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 30, 30));
+        Avion.add(asientoA29, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 30, 30));
 
         asientoA24.setBackground(new java.awt.Color(153, 255, 153));
         asientoA24.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1354,7 +1228,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA24, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, 30, 30));
+        Avion.add(asientoA24, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 60, 30, 30));
 
         asientoA27.setBackground(new java.awt.Color(153, 255, 153));
         asientoA27.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1384,7 +1258,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA27, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 30, 30));
+        Avion.add(asientoA27, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, 30, 30));
 
         asientoA34.setBackground(new java.awt.Color(153, 255, 153));
         asientoA34.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1414,7 +1288,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA34, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, 30, 30));
+        Avion.add(asientoA34, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 30, 30));
 
         asientoA32.setBackground(new java.awt.Color(153, 255, 153));
         asientoA32.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1444,7 +1318,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA32, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 30, 30));
+        Avion.add(asientoA32, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, 30, 30));
 
         asientoA33.setBackground(new java.awt.Color(153, 255, 153));
         asientoA33.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1504,7 +1378,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA37, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 30, 30));
+        Avion.add(asientoA37, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 170, 30, 30));
 
         asientoA35.setBackground(new java.awt.Color(153, 255, 153));
         asientoA35.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1536,36 +1410,6 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
 
         Avion.add(asientoA35, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 30, 30));
 
-        asientoA36.setBackground(new java.awt.Color(153, 255, 153));
-        asientoA36.setPreferredSize(new java.awt.Dimension(40, 40));
-        asientoA36.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                asientoA36MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                asientoA36MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                asientoA36MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                asientoA36MousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout asientoA36Layout = new javax.swing.GroupLayout(asientoA36);
-        asientoA36.setLayout(asientoA36Layout);
-        asientoA36Layout.setHorizontalGroup(
-            asientoA36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        asientoA36Layout.setVerticalGroup(
-            asientoA36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        Avion.add(asientoA36, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 30, 30));
-
         asientoA38.setBackground(new java.awt.Color(153, 255, 153));
         asientoA38.setPreferredSize(new java.awt.Dimension(40, 40));
         asientoA38.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1594,7 +1438,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA38, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 210, 30, 30));
+        Avion.add(asientoA38, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 170, 30, 30));
 
         asientoA39.setBackground(new java.awt.Color(153, 255, 153));
         asientoA39.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1624,7 +1468,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA39, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 30, 30));
+        Avion.add(asientoA39, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 170, 30, 30));
 
         asientoA47.setBackground(new java.awt.Color(153, 255, 153));
         asientoA47.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1654,7 +1498,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA47, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 170, 30, 30));
+        Avion.add(asientoA47, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 30, 30));
 
         asientoA41.setBackground(new java.awt.Color(153, 255, 153));
         asientoA41.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1684,7 +1528,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA41, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 30, 30));
+        Avion.add(asientoA41, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, 30, 30));
 
         asientoA45.setBackground(new java.awt.Color(153, 255, 153));
         asientoA45.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1714,7 +1558,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA45, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 210, 30, 30));
+        Avion.add(asientoA45, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, 30, 30));
 
         asientoA44.setBackground(new java.awt.Color(153, 255, 153));
         asientoA44.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1744,7 +1588,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA44, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 170, 30, 30));
+        Avion.add(asientoA44, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 30, 30));
 
         asientoA43.setBackground(new java.awt.Color(153, 255, 153));
         asientoA43.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1774,7 +1618,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA43, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 210, 30, 30));
+        Avion.add(asientoA43, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 30, 30));
 
         asientoA46.setBackground(new java.awt.Color(153, 255, 153));
         asientoA46.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1804,7 +1648,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA46, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 30, 30));
+        Avion.add(asientoA46, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 30, 30));
 
         asientoA42.setBackground(new java.awt.Color(153, 255, 153));
         asientoA42.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1834,7 +1678,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA42, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 170, 30, 30));
+        Avion.add(asientoA42, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 30, 30));
 
         asientoA40.setBackground(new java.awt.Color(153, 255, 153));
         asientoA40.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1864,7 +1708,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA40, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 30, 30));
+        Avion.add(asientoA40, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, 30, 30));
 
         asientoA49.setBackground(new java.awt.Color(153, 255, 153));
         asientoA49.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1894,7 +1738,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA49, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, 30, 30));
+        Avion.add(asientoA49, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 210, 30, 30));
 
         asientoA48.setBackground(new java.awt.Color(153, 255, 153));
         asientoA48.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1924,7 +1768,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA48, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 210, 30, 30));
+        Avion.add(asientoA48, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 30, 30));
 
         asientoA51.setBackground(new java.awt.Color(153, 255, 153));
         asientoA51.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1954,7 +1798,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA51, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, 30, 30));
+        Avion.add(asientoA51, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 30, 30));
 
         asientoA50.setBackground(new java.awt.Color(153, 255, 153));
         asientoA50.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1984,7 +1828,247 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA50, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, 30, 30));
+        Avion.add(asientoA50, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 210, 30, 30));
+
+        asientoA53.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA53.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA53.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA53MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA53MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA53MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA53MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA53Layout = new javax.swing.GroupLayout(asientoA53);
+        asientoA53.setLayout(asientoA53Layout);
+        asientoA53Layout.setHorizontalGroup(
+            asientoA53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA53Layout.setVerticalGroup(
+            asientoA53Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA53, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 30, 30));
+
+        asientoA12.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA12.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA12MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA12MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA12MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA12MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA12Layout = new javax.swing.GroupLayout(asientoA12);
+        asientoA12.setLayout(asientoA12Layout);
+        asientoA12Layout.setHorizontalGroup(
+            asientoA12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA12Layout.setVerticalGroup(
+            asientoA12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA12, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, 30, 30));
+
+        asientoA13.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA13.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA13MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA13MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA13MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA13MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA13Layout = new javax.swing.GroupLayout(asientoA13);
+        asientoA13.setLayout(asientoA13Layout);
+        asientoA13Layout.setHorizontalGroup(
+            asientoA13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA13Layout.setVerticalGroup(
+            asientoA13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA13, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, 30, 30));
+
+        asientoA22.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA22.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA22.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA22MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA22MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA22MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA22MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA22Layout = new javax.swing.GroupLayout(asientoA22);
+        asientoA22.setLayout(asientoA22Layout);
+        asientoA22Layout.setHorizontalGroup(
+            asientoA22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA22Layout.setVerticalGroup(
+            asientoA22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA22, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, 30, 30));
+
+        asientoA36.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA36.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA36.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA36MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA36MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA36MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA36MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA36Layout = new javax.swing.GroupLayout(asientoA36);
+        asientoA36.setLayout(asientoA36Layout);
+        asientoA36Layout.setHorizontalGroup(
+            asientoA36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA36Layout.setVerticalGroup(
+            asientoA36Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA36, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 30, 30));
+
+        asientoA52.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA52.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA52.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA52MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA52MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA52MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA52MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA52Layout = new javax.swing.GroupLayout(asientoA52);
+        asientoA52.setLayout(asientoA52Layout);
+        asientoA52Layout.setHorizontalGroup(
+            asientoA52Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA52Layout.setVerticalGroup(
+            asientoA52Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA52, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 210, 30, 30));
+
+        asientoA54.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA54.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA54.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA54MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA54MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA54MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA54MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA54Layout = new javax.swing.GroupLayout(asientoA54);
+        asientoA54.setLayout(asientoA54Layout);
+        asientoA54Layout.setHorizontalGroup(
+            asientoA54Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA54Layout.setVerticalGroup(
+            asientoA54Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA54, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, 30, 30));
+
+        asientoA55.setBackground(new java.awt.Color(153, 255, 153));
+        asientoA55.setPreferredSize(new java.awt.Dimension(40, 40));
+        asientoA55.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                asientoA55MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                asientoA55MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                asientoA55MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                asientoA55MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout asientoA55Layout = new javax.swing.GroupLayout(asientoA55);
+        asientoA55.setLayout(asientoA55Layout);
+        asientoA55Layout.setHorizontalGroup(
+            asientoA55Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+        asientoA55Layout.setVerticalGroup(
+            asientoA55Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        Avion.add(asientoA55, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 210, 30, 30));
 
         AvionAsientos.add(Avion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 650, 250));
 
@@ -2090,207 +2174,6 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         gestionarSeleccionAsiento((JPanelRedondeado) asientoA1);// TODO add your handling code here:
     }//GEN-LAST:event_asientoA1MousePressed
 
-    private void asientoA2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA2MouseClicked
-
-    private void asientoA2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA2MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA2MouseEntered
-
-    private void asientoA2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA2MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA2MouseExited
-
-    private void asientoA2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA2MousePressed
-        // TODO add your handling code here:
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA2);
-    }//GEN-LAST:event_asientoA2MousePressed
-
-    private void asientoA3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA3MouseClicked
-
-    private void asientoA3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA3MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA3MouseEntered
-
-    private void asientoA3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA3MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA3MouseExited
-
-    private void asientoA3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA3MousePressed
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA3);// TODO add your handling code here:
-    }//GEN-LAST:event_asientoA3MousePressed
-
-    private void asientoA4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA4MouseClicked
-
-    private void asientoA4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA4MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA4MouseEntered
-
-    private void asientoA4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA4MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA4MouseExited
-
-    private void asientoA4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA4MousePressed
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA4);// TODO add your handling code here:
-    }//GEN-LAST:event_asientoA4MousePressed
-
-    private void asientoA5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA5MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA5MouseClicked
-
-    private void asientoA5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA5MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA5MouseEntered
-
-    private void asientoA5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA5MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA5MouseExited
-
-    private void asientoA5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA5MousePressed
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA5);// TODO add your handling code here:
-    }//GEN-LAST:event_asientoA5MousePressed
-
-    private void asientoA6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA6MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA6MouseClicked
-
-    private void asientoA6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA6MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA6MouseEntered
-
-    private void asientoA6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA6MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA6MouseExited
-
-    private void asientoA6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA6MousePressed
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA6);// TODO add your handling code here:
-    }//GEN-LAST:event_asientoA6MousePressed
-
-    private void asientoA7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA7MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA7MouseClicked
-
-    private void asientoA7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA7MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA7MouseEntered
-
-    private void asientoA7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA7MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA7MouseExited
-
-    private void asientoA7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA7MousePressed
-        // TODO add your handling code here:
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA7);
-    }//GEN-LAST:event_asientoA7MousePressed
-
-    private void asientoA8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA8MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA8MouseClicked
-
-    private void asientoA8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA8MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA8MouseEntered
-
-    private void asientoA8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA8MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA8MouseExited
-
-    private void asientoA8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA8MousePressed
-        // TODO add your handling code here:
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA8);
-
-    }//GEN-LAST:event_asientoA8MousePressed
-
-    private void asientoA9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA9MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA9MouseClicked
-
-    private void asientoA9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA9MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA9MouseEntered
-
-    private void asientoA9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA9MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA9MouseExited
-
-    private void asientoA9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA9MousePressed
-
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA9);// TODO add your handling code here:
-    }//GEN-LAST:event_asientoA9MousePressed
-
-    private void asientoA10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA10MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA10MouseClicked
-
-    private void asientoA10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA10MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA10MouseEntered
-
-    private void asientoA10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA10MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA10MouseExited
-
-    private void asientoA10MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA10MousePressed
-        // TODO add your handling code here:
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA10);
-    }//GEN-LAST:event_asientoA10MousePressed
-
-    private void asientoA11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA11MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA11MouseClicked
-
-    private void asientoA11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA11MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA11MouseEntered
-
-    private void asientoA11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA11MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA11MouseExited
-
-    private void asientoA11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA11MousePressed
-        // TODO add your handling code here:
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA11);
-    }//GEN-LAST:event_asientoA11MousePressed
-
-    private void asientoA12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA12MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA12MouseClicked
-
-    private void asientoA12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA12MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA12MouseEntered
-
-    private void asientoA12MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA12MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA12MouseExited
-
-    private void asientoA12MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA12MousePressed
-        // TODO add your handling code here:
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA12);
-    }//GEN-LAST:event_asientoA12MousePressed
-
-    private void asientoA13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA13MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA13MouseClicked
-
-    private void asientoA13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA13MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA13MouseEntered
-
-    private void asientoA13MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA13MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA13MouseExited
-
-    private void asientoA13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA13MousePressed
-        // TODO add your handling code here:
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA13);
-    }//GEN-LAST:event_asientoA13MousePressed
-
     private void asientoA14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA14MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_asientoA14MouseClicked
@@ -2321,9 +2204,24 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_asientoA15MouseExited
 
     private void asientoA15MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA15MousePressed
-        // TODO add your handling code here:
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA15);
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA15);// TODO add your handling code here:
     }//GEN-LAST:event_asientoA15MousePressed
+
+    private void asientoA2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA2MouseClicked
+
+    private void asientoA2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA2MouseEntered
+
+    private void asientoA2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA2MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA2MouseExited
+
+    private void asientoA2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA2MousePressed
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA2);// TODO add your handling code here:
+    }//GEN-LAST:event_asientoA2MousePressed
 
     private void asientoA16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA16MouseClicked
         // TODO add your handling code here:
@@ -2338,8 +2236,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_asientoA16MouseExited
 
     private void asientoA16MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA16MousePressed
-        // TODO add your handling code here:
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA16);
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA16);// TODO add your handling code here:
     }//GEN-LAST:event_asientoA16MousePressed
 
     private void asientoA17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA17MouseClicked
@@ -2355,9 +2252,196 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_asientoA17MouseExited
 
     private void asientoA17MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA17MousePressed
-        // TODO add your handling code here:
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA17);
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA17);// TODO add your handling code here:
     }//GEN-LAST:event_asientoA17MousePressed
+
+    private void asientoA3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA3MouseClicked
+
+    private void asientoA3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA3MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA3MouseEntered
+
+    private void asientoA3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA3MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA3MouseExited
+
+    private void asientoA3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA3MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA3);
+    }//GEN-LAST:event_asientoA3MousePressed
+
+    private void asientoA22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA22MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA22MouseClicked
+
+    private void asientoA22MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA22MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA22MouseEntered
+
+    private void asientoA22MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA22MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA22MouseExited
+
+    private void asientoA22MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA22MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA22);
+
+    }//GEN-LAST:event_asientoA22MousePressed
+
+    private void asientoA6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA6MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA6MouseClicked
+
+    private void asientoA6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA6MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA6MouseEntered
+
+    private void asientoA6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA6MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA6MouseExited
+
+    private void asientoA6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA6MousePressed
+
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA6);// TODO add your handling code here:
+    }//GEN-LAST:event_asientoA6MousePressed
+
+    private void asientoA20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA20MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA20MouseClicked
+
+    private void asientoA20MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA20MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA20MouseEntered
+
+    private void asientoA20MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA20MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA20MouseExited
+
+    private void asientoA20MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA20MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA20);
+    }//GEN-LAST:event_asientoA20MousePressed
+
+    private void asientoA7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA7MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA7MouseClicked
+
+    private void asientoA7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA7MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA7MouseEntered
+
+    private void asientoA7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA7MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA7MouseExited
+
+    private void asientoA7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA7MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA7);
+    }//GEN-LAST:event_asientoA7MousePressed
+
+    private void asientoA4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA4MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA4MouseClicked
+
+    private void asientoA4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA4MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA4MouseEntered
+
+    private void asientoA4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA4MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA4MouseExited
+
+    private void asientoA4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA4MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA4);
+    }//GEN-LAST:event_asientoA4MousePressed
+
+    private void asientoA5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA5MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA5MouseClicked
+
+    private void asientoA5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA5MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA5MouseEntered
+
+    private void asientoA5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA5MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA5MouseExited
+
+    private void asientoA5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA5MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA5);
+    }//GEN-LAST:event_asientoA5MousePressed
+
+    private void asientoA54MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA54MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA54MouseClicked
+
+    private void asientoA54MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA54MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA54MouseEntered
+
+    private void asientoA54MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA54MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA54MouseExited
+
+    private void asientoA54MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA54MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA54);
+    }//GEN-LAST:event_asientoA54MousePressed
+
+    private void asientoA55MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA55MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA55MouseClicked
+
+    private void asientoA55MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA55MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA55MouseEntered
+
+    private void asientoA55MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA55MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA55MouseExited
+
+    private void asientoA55MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA55MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA55);
+    }//GEN-LAST:event_asientoA55MousePressed
+
+    private void asientoA8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA8MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA8MouseClicked
+
+    private void asientoA8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA8MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA8MouseEntered
+
+    private void asientoA8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA8MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA8MouseExited
+
+    private void asientoA8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA8MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA8);
+    }//GEN-LAST:event_asientoA8MousePressed
+
+    private void asientoA23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA23MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA23MouseClicked
+
+    private void asientoA23MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA23MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA23MouseEntered
+
+    private void asientoA23MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA23MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA23MouseExited
+
+    private void asientoA23MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA23MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA23);
+    }//GEN-LAST:event_asientoA23MousePressed
 
     private void asientoA18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA18MouseClicked
         // TODO add your handling code here:
@@ -2393,22 +2477,22 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         gestionarSeleccionAsiento((JPanelRedondeado) asientoA19);
     }//GEN-LAST:event_asientoA19MousePressed
 
-    private void asientoA20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA20MouseClicked
+    private void asientoA9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA9MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA20MouseClicked
+    }//GEN-LAST:event_asientoA9MouseClicked
 
-    private void asientoA20MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA20MouseEntered
+    private void asientoA9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA9MouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA20MouseEntered
+    }//GEN-LAST:event_asientoA9MouseEntered
 
-    private void asientoA20MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA20MouseExited
+    private void asientoA9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA9MouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA20MouseExited
+    }//GEN-LAST:event_asientoA9MouseExited
 
-    private void asientoA20MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA20MousePressed
+    private void asientoA9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA9MousePressed
         // TODO add your handling code here:
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA20);
-    }//GEN-LAST:event_asientoA20MousePressed
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA9);
+    }//GEN-LAST:event_asientoA9MousePressed
 
     private void asientoA21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA21MouseClicked
         // TODO add your handling code here:
@@ -2427,39 +2511,39 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         gestionarSeleccionAsiento((JPanelRedondeado) asientoA21);
     }//GEN-LAST:event_asientoA21MousePressed
 
-    private void asientoA22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA22MouseClicked
+    private void asientoA10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA10MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA22MouseClicked
+    }//GEN-LAST:event_asientoA10MouseClicked
 
-    private void asientoA22MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA22MouseEntered
+    private void asientoA10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA10MouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA22MouseEntered
+    }//GEN-LAST:event_asientoA10MouseEntered
 
-    private void asientoA22MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA22MouseExited
+    private void asientoA10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA10MouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA22MouseExited
+    }//GEN-LAST:event_asientoA10MouseExited
 
-    private void asientoA22MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA22MousePressed
+    private void asientoA10MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA10MousePressed
         // TODO add your handling code here:
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA22);
-    }//GEN-LAST:event_asientoA22MousePressed
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA10);
+    }//GEN-LAST:event_asientoA10MousePressed
 
-    private void asientoA23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA23MouseClicked
+    private void asientoA11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA11MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA23MouseClicked
+    }//GEN-LAST:event_asientoA11MouseClicked
 
-    private void asientoA23MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA23MouseEntered
+    private void asientoA11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA11MouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA23MouseEntered
+    }//GEN-LAST:event_asientoA11MouseEntered
 
-    private void asientoA23MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA23MouseExited
+    private void asientoA11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA11MouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_asientoA23MouseExited
+    }//GEN-LAST:event_asientoA11MouseExited
 
-    private void asientoA23MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA23MousePressed
+    private void asientoA11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA11MousePressed
         // TODO add your handling code here:
-        gestionarSeleccionAsiento((JPanelRedondeado) asientoA23);
-    }//GEN-LAST:event_asientoA23MousePressed
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA11);
+    }//GEN-LAST:event_asientoA11MousePressed
 
     private void asientoA24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA24MouseClicked
         // TODO add your handling code here:
@@ -2936,6 +3020,75 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_asientoA51MousePressed
 
+    private void asientoA52MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA52MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA52MouseClicked
+
+    private void asientoA52MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA52MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA52MouseEntered
+
+    private void asientoA52MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA52MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA52MouseExited
+
+    private void asientoA52MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA52MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA52);
+    }//GEN-LAST:event_asientoA52MousePressed
+
+    private void asientoA12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA12MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA12MouseClicked
+
+    private void asientoA12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA12MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA12MouseEntered
+
+    private void asientoA12MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA12MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA12MouseExited
+
+    private void asientoA12MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA12MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA12);
+    }//GEN-LAST:event_asientoA12MousePressed
+
+    private void asientoA13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA13MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA13MouseClicked
+
+    private void asientoA13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA13MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA13MouseEntered
+
+    private void asientoA13MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA13MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA13MouseExited
+
+    private void asientoA13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA13MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA13);
+        
+    }//GEN-LAST:event_asientoA13MousePressed
+
+    private void asientoA53MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA53MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA53MouseClicked
+
+    private void asientoA53MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA53MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA53MouseEntered
+
+    private void asientoA53MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA53MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asientoA53MouseExited
+
+    private void asientoA53MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_asientoA53MousePressed
+        // TODO add your handling code here:
+        gestionarSeleccionAsiento((JPanelRedondeado) asientoA53);
+    }//GEN-LAST:event_asientoA53MousePressed
+
     /**
      * @param args the command line arguments<
      */
@@ -2993,6 +3146,10 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
     private javax.swing.JPanel asientoA5;
     private javax.swing.JPanel asientoA50;
     private javax.swing.JPanel asientoA51;
+    private javax.swing.JPanel asientoA52;
+    private javax.swing.JPanel asientoA53;
+    private javax.swing.JPanel asientoA54;
+    private javax.swing.JPanel asientoA55;
     private javax.swing.JPanel asientoA6;
     private javax.swing.JPanel asientoA7;
     private javax.swing.JPanel asientoA8;
@@ -3010,7 +3167,6 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel menuOpciones;
     // End of variables declaration//GEN-END:variables
 
