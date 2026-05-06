@@ -38,11 +38,11 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
     }
 
     private void PasarPorEncima(JPanel panel) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        panel.setBackground(Color.decode("#A655DC"));
     }
 
     private void Salir(JPanel panel) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        panel.setBackground(Color.WHITE);
     }
 
     private void gestionarSeleccionAsiento(JPanelRedondeado asiento) {
@@ -65,12 +65,13 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         // 1. Todo a color disponible inicialmente
         while (i < componentes.length) {
             Component comp = componentes[i];
-            if (comp instanceof JPanelRedondeado ) {
+           
+            if (comp instanceof JPanelRedondeado) {
                 comp.setBackground(COLOR_DISPONIBLE);
             }
             i++;
         }
-
+        pasillo.setBackground(Color.decode("#C6B0E3"));
         if (vueloSeleccionado == null) {
             return;
         }
@@ -136,14 +137,13 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         menuOpciones = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        Fecha = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         AvionAsientos = new javax.swing.JPanel();
         Avion = new JPanelRedondeado();
-        jPanel2 = new JPanelRedondeado();
+        pasillo = new JPanelRedondeado();
         asientoA0 = new JPanelRedondeado();
         asientoA1 = new JPanelRedondeado();
         asientoA14 = new JPanelRedondeado();
@@ -201,6 +201,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         asientoA54 = new JPanelRedondeado();
         asientoA55 = new JPanelRedondeado();
         jLabel7 = new javax.swing.JLabel();
+        Fecha = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -260,31 +261,21 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Corbel Light", 0, 18)); // NOI18N
         jLabel4.setText("Comprar boletos");
 
-        Fecha.setFont(new java.awt.Font("Corbel Light", 0, 18)); // NOI18N
-        Fecha.setText("13/04/2026");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(Fecha)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
+                .addComponent(jLabel4)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Fecha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -305,16 +296,16 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
+                .addContainerGap(51, Short.MAX_VALUE)
                 .addComponent(jLabel5)
-                .addGap(27, 27, 27))
+                .addGap(25, 25, 25))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addComponent(jLabel5)
-                .addContainerGap())
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -335,16 +326,16 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(21, 21, 21)
                 .addComponent(jLabel6)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout menuOpcionesLayout = new javax.swing.GroupLayout(menuOpciones);
@@ -375,20 +366,20 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         Avion.setBackground(new java.awt.Color(204, 204, 204));
         Avion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(198, 176, 227));
+        pasillo.setBackground(new java.awt.Color(198, 176, 227));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pasilloLayout = new javax.swing.GroupLayout(pasillo);
+        pasillo.setLayout(pasilloLayout);
+        pasilloLayout.setHorizontalGroup(
+            pasilloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 570, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pasilloLayout.setVerticalGroup(
+            pasilloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 57, Short.MAX_VALUE)
         );
 
-        Avion.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 570, -1));
+        Avion.add(pasillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 570, -1));
 
         asientoA0.setBackground(new java.awt.Color(153, 255, 153));
         asientoA0.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -2078,6 +2069,10 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
 
         jPanel1.add(AvionAsientos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 700, 360));
 
+        Fecha.setFont(new java.awt.Font("Corbel Light", 0, 18)); // NOI18N
+        Fecha.setText("13/04/2026");
+        jPanel1.add(Fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 500));
 
         pack();
@@ -3163,11 +3158,11 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel menuOpciones;
+    private javax.swing.JPanel pasillo;
     // End of variables declaration//GEN-END:variables
 
 }
