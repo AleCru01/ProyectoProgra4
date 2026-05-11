@@ -133,6 +133,7 @@ public class Registrarse extends javax.swing.JFrame  {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Contraseña:");
+                jLabel10.setText("LINEA DE PRUEBA");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, 290, 360));
