@@ -25,7 +25,6 @@ public class RegristrarAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
         jPanel1 =  new proyectofinal.JPanelRedondeado();
         txtNombre = new javax.swing.JLabel();
         txtApellido = new javax.swing.JLabel();
@@ -51,16 +50,12 @@ public class RegristrarAdmin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         Cerrar = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(51, 0, 51));
         setUndecorated(true);
-
-        jPanel2.setBackground(new java.awt.Color(204, 0, 204));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 5, true));
@@ -71,31 +66,31 @@ public class RegristrarAdmin extends javax.swing.JFrame {
         txtNombre.setForeground(new java.awt.Color(117, 36, 165));
         txtNombre.setText("Nombre:");
         jPanel1.add(txtNombre);
-        txtNombre.setBounds(80, 130, 75, 25);
+        txtNombre.setBounds(80, 130, 74, 25);
 
         txtApellido.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
         txtApellido.setForeground(new java.awt.Color(117, 36, 165));
         txtApellido.setText("Apellido:");
         jPanel1.add(txtApellido);
-        txtApellido.setBounds(80, 170, 77, 25);
+        txtApellido.setBounds(80, 170, 76, 25);
 
         txtUsuario.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
         txtUsuario.setForeground(new java.awt.Color(117, 36, 165));
         txtUsuario.setText("Usuario:");
         jPanel1.add(txtUsuario);
-        txtUsuario.setBounds(80, 210, 71, 25);
+        txtUsuario.setBounds(80, 210, 70, 25);
 
         txtCodigo.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
         txtCodigo.setForeground(new java.awt.Color(117, 36, 165));
         txtCodigo.setText("C. de empeado:");
         jPanel1.add(txtCodigo);
-        txtCodigo.setBounds(40, 250, 132, 25);
+        txtCodigo.setBounds(40, 250, 131, 25);
 
         txtCorreo.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
         txtCorreo.setForeground(new java.awt.Color(117, 36, 165));
         txtCorreo.setText("Correo:");
         jPanel1.add(txtCorreo);
-        txtCorreo.setBounds(80, 290, 63, 25);
+        txtCorreo.setBounds(80, 290, 62, 25);
 
         txtGenero.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
         txtGenero.setForeground(new java.awt.Color(117, 36, 165));
@@ -107,7 +102,7 @@ public class RegristrarAdmin extends javax.swing.JFrame {
         txtFecha.setForeground(new java.awt.Color(117, 36, 165));
         txtFecha.setText("F. de Contratación:");
         jPanel1.add(txtFecha);
-        txtFecha.setBounds(310, 250, 161, 25);
+        txtFecha.setBounds(310, 250, 160, 25);
 
         txtRFC.setFont(new java.awt.Font("Leelawadee UI", 1, 18)); // NOI18N
         txtRFC.setForeground(new java.awt.Color(117, 36, 165));
@@ -200,7 +195,7 @@ public class RegristrarAdmin extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnRegistrarAdmin);
-        btnRegistrarAdmin.setBounds(210, 350, 243, 32);
+        btnRegistrarAdmin.setBounds(210, 350, 238, 32);
 
         cbxGenero.setFont(new java.awt.Font("Leelawadee UI", 2, 14)); // NOI18N
         cbxGenero.setForeground(new java.awt.Color(153, 153, 153));
@@ -224,11 +219,6 @@ public class RegristrarAdmin extends javax.swing.JFrame {
         jLabel4.setText("ALTA DE");
         jPanel1.add(jLabel4);
         jLabel4.setBounds(170, 20, 500, 41);
-
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 19, 659, 422));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/inicio.jpg"))); // NOI18N
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -50, -1, -1));
 
         Cerrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -267,24 +257,20 @@ public class RegristrarAdmin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(696, Short.MAX_VALUE)
+                .addContainerGap(49, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(Cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(428, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Cerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(1036, Short.MAX_VALUE))
         );
 
         pack();
@@ -401,9 +387,7 @@ public class RegristrarAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel txtApellido;
     private javax.swing.JLabel txtCodigo;
     private javax.swing.JLabel txtContrasena;

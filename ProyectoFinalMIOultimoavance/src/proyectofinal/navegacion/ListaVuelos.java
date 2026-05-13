@@ -5,6 +5,14 @@ import javax.swing.JOptionPane;
 import java.sql.*;
 import proyectofinal.ConexionBD;
 import proyectofinal.navegacion.FormularioParaVuelos;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
+import java.io.File;
+import java.awt.Desktop;
 /**
  *
  * @author 186377
@@ -76,6 +84,7 @@ public final class ListaVuelos extends javax.swing.JFrame {
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
+        btnReporte = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -102,6 +111,17 @@ public final class ListaVuelos extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tblVuelos);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 463, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 77, Short.MAX_VALUE)
+        );
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -131,32 +151,12 @@ public final class ListaVuelos extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnAgregar)
-                .addGap(18, 18, 18)
-                .addComponent(btnModificar)
-                .addGap(18, 18, 18)
-                .addComponent(btnEliminar)
-                .addGap(18, 18, 18)
-                .addComponent(btnActualizar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregar)
-                    .addComponent(btnModificar)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnActualizar))
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
+        btnReporte.setText("Generar PDF");
+        btnReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -165,9 +165,19 @@ public final class ListaVuelos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,6 +187,18 @@ public final class ListaVuelos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(btnAgregar)
+                .addGap(18, 18, 18)
+                .addComponent(btnModificar)
+                .addGap(18, 18, 18)
+                .addComponent(btnActualizar)
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminar)
+                .addGap(18, 18, 18)
+                .addComponent(btnReporte)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -251,6 +273,73 @@ public final class ListaVuelos extends javax.swing.JFrame {
     cargarTabla();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
+    private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
+        // CREA EL DOCUMENTO EN BLANCO 
+        Document documento = new Document();
+        
+        try {
+            //RUTA PARA SABER DONDE GUARDARLO
+            String ruta = System.getProperty("user.home") + "/Desktop/Reporte_Vuelos_Aurora.pdf";
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+            
+ 
+            documento.open();
+            
+        
+            Paragraph titulo = new Paragraph("Reporte de Vuelos - Aurora Airlines\n\n");
+            titulo.setAlignment(1);
+            documento.add(titulo);
+            
+
+            Paragraph creadores = new Paragraph("Desarrollado por: Victor y Marissa.\n\n");
+            documento.add(creadores);
+            
+            //CREAMOS UNA TABLA PARA IMPRIMIR EN PDFS
+            PdfPTable tabla = new PdfPTable(6);
+            tabla.addCell("Vuelo");
+            tabla.addCell("Origen");
+            tabla.addCell("Destino");
+            tabla.addCell("Salida");
+            tabla.addCell("Llegada");
+            tabla.addCell("Precio");
+             //CONEXION A LA BASE DE DATOS
+            String query = "SELECT v.numVuelo, c1.nombre AS origen, c2.nombre AS destino, v.horarioSalida, v.horarioLlegada, v.precioBoleto " +
+                           "FROM vuelo v " +
+                           "JOIN ciudad c1 ON v.id_origen = c1.id_ciudad " +
+                           "JOIN ciudad c2 ON v.id_destino = c2.id_ciudad";
+                           
+            try (Connection con = ConexionBD.getConnection();
+                 Statement st = con.createStatement();
+                 ResultSet rs = st.executeQuery(query)) {
+                 
+                
+            //POR CADA VUELO QUE ENCUENTRE AGREGAMOS UNA FILA
+                 while (rs.next()) {
+                     tabla.addCell(rs.getString("numVuelo"));
+                     tabla.addCell(rs.getString("origen"));
+                     tabla.addCell(rs.getString("destino"));
+                     tabla.addCell(rs.getString("horarioSalida"));
+                     tabla.addCell(rs.getString("horarioLlegada"));
+                     tabla.addCell("$" + rs.getString("precioBoleto"));
+                 }
+            }
+            
+            //AGREGAMOS LATABLA AL PDF Y CERRAMOS EL DOCUMENTO 
+            documento.add(tabla);
+            documento.close();
+            
+            JOptionPane.showMessageDialog(this, "Reporte PDF generado con éxito en tu Escritorio!");
+            //ABRIR EL ARCHIVO S
+            File archivo = new File(ruta);
+            if (archivo.exists()) {
+                Desktop.getDesktop().open(archivo);
+            }
+            
+        } catch (DocumentException | java.io.IOException | SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al generar el PDF: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnReporteActionPerformed
+
     
     /**
      * @param args the command line arguments
@@ -299,6 +388,7 @@ public final class ListaVuelos extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnReporte;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

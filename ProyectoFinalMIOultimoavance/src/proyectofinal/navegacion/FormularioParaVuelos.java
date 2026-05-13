@@ -253,8 +253,26 @@ public class FormularioParaVuelos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-      String sql;
-        boolean esEdicion = (idVueloSeleccionado != 0); // Si es diferente de 0 significa que estamos modificando
+     // Codigo para evitar campos vacíos
+        if (txtNumVuelo.getText().isEmpty() || txtFecha.getText().isEmpty() || 
+            txtHorarioSalida.getText().isEmpty() || txtHorarioLlegada.getText().isEmpty() || 
+            txtEstado.getText().isEmpty() || txtCapacidad.getText().isEmpty() || txtPrecio.getText().isEmpty()) {
+            
+            JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos antes de guardar.");
+            return; 
+        }
+
+        // VALIDACION que no viaje a la misma ciudad
+        int indiceOrigen = txtIdOrigen.getSelectedIndex();
+        int indiceDestino = txtIdDestino.getSelectedIndex();
+        
+        if (indiceOrigen == indiceDestino) {
+            JOptionPane.showMessageDialog(this, "El origen y el destino no pueden ser la misma ciudad.");
+            return;
+        }
+
+        String sql;
+        boolean esEdicion = (idVueloSeleccionado != 0); 
 
         if (esEdicion) {
             sql = "UPDATE vuelo SET numVuelo=?, id_origen=?, id_destino=?, horarioSalida=?, horarioLlegada=?, fecha=?, estado=?, capacidadTotal=?, precioBoleto=? WHERE id_vuelo=?";
@@ -273,35 +291,29 @@ public class FormularioParaVuelos extends javax.swing.JFrame {
             String horarioLlegada = hLlegadaTexto.length() > 10 ? hLlegadaTexto : fecha + " " + hLlegadaTexto;
 
             pst.setString(1, txtNumVuelo.getText());
-            
-            int indiceOrigen = txtIdOrigen.getSelectedIndex();
-            if (indiceOrigen != -1) {
-                pst.setInt(2, listaIdsCiudades.get(indiceOrigen));
-            }
-
-            int indiceDestino = txtIdDestino.getSelectedIndex();
-            if (indiceDestino != -1) {
-                pst.setInt(3, listaIdsCiudades.get(indiceDestino));
-            }
-            
+            pst.setInt(2, listaIdsCiudades.get(indiceOrigen));
+            pst.setInt(3, listaIdsCiudades.get(indiceDestino));
             pst.setString(4, horarioSalida);
             pst.setString(5, horarioLlegada);
             pst.setString(6, fecha);
             pst.setString(7, txtEstado.getText());
+            
+            // Si no son numeros válidos aquí lo atrapa el catch
             pst.setInt(8, Integer.parseInt(txtCapacidad.getText()));
             pst.setDouble(9, Double.parseDouble(txtPrecio.getText()));
 
-            // Si estamos modificando entonces el  ID de vuelo tiene que cambiar
             if (esEdicion) {
                 pst.setInt(10, idVueloSeleccionado);
             }
 
             pst.executeUpdate();
-            JOptionPane.showMessageDialog(this, esEdicion ? "Vuelo actualizado correctamente" : "Vuelo registrado correctamente");
+            JOptionPane.showMessageDialog(this, esEdicion ? "¡Vuelo actualizado correctamente!" : "¡Vuelo registrado correctamente!");
             this.dispose();
 
+        } catch (NumberFormatException ex) {
+             JOptionPane.showMessageDialog(this, "Error: La capacidad y el precio deben ser números válidos.");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al guardar en BD: " + e.getMessage());
         }
         }//GEN-LAST:event_btnGuardarActionPerformed
 

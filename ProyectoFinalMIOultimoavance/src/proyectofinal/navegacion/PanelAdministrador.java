@@ -3,7 +3,7 @@
     import java.awt.Color;
     import java.time.LocalDate;
     import java.time.format.DateTimeFormatter;
-import proyectofinal.AltaUsuariosAdmin;
+    import proyectofinal.AltaUsuariosAdmin;
     import proyectofinal.JPanelRedondeado;
     import proyectofinal.RegristrarAdmin;
     
@@ -38,13 +38,9 @@ import proyectofinal.AltaUsuariosAdmin;
         jLabel1 = new javax.swing.JLabel();
         btnVerDestinos = new javax.swing.JPanel();
         txtVerDestinos = new javax.swing.JLabel();
-        btnUsuarios = new javax.swing.JPanel();
-        txtUsuarios = new javax.swing.JLabel();
         btnAggAdmin = new javax.swing.JPanel();
         txtUsuarios1 = new javax.swing.JLabel();
         txtUsuarios2 = new javax.swing.JLabel();
-        btnModificar = new javax.swing.JPanel();
-        txtVerDestinos1 = new javax.swing.JLabel();
         btnVuelos = new javax.swing.JPanel();
         txtUsuarios3 = new javax.swing.JLabel();
         btnAggUsuarios1 = new javax.swing.JPanel();
@@ -102,6 +98,9 @@ import proyectofinal.AltaUsuariosAdmin;
 
         btnVerDestinos.setBackground(new java.awt.Color(117, 36, 165));
         btnVerDestinos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVerDestinosMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnVerDestinosMouseEntered(evt);
             }
@@ -127,46 +126,12 @@ import proyectofinal.AltaUsuariosAdmin;
         btnVerDestinosLayout.setVerticalGroup(
             btnVerDestinosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnVerDestinosLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(24, 24, 24)
                 .addComponent(txtVerDestinos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        jPanel2.add(btnVerDestinos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 160, 60));
-
-        btnUsuarios.setBackground(new java.awt.Color(117, 36, 165));
-        btnUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnUsuariosMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnUsuariosMouseExited(evt);
-            }
-        });
-
-        txtUsuarios.setFont(new java.awt.Font("Corbel Light", 0, 24)); // NOI18N
-        txtUsuarios.setForeground(new java.awt.Color(255, 255, 255));
-        txtUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtUsuarios.setText("Usuarios");
-
-        javax.swing.GroupLayout btnUsuariosLayout = new javax.swing.GroupLayout(btnUsuarios);
-        btnUsuarios.setLayout(btnUsuariosLayout);
-        btnUsuariosLayout.setHorizontalGroup(
-            btnUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnUsuariosLayout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addComponent(txtUsuarios)
-                .addGap(37, 37, 37))
-        );
-        btnUsuariosLayout.setVerticalGroup(
-            btnUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnUsuariosLayout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(txtUsuarios)
-                .addGap(18, 18, 18))
-        );
-
-        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 160, 70));
+        jPanel2.add(btnVerDestinos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 160, 80));
 
         btnAggAdmin.setBackground(new java.awt.Color(117, 36, 165));
         btnAggAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -215,41 +180,7 @@ import proyectofinal.AltaUsuariosAdmin;
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        jPanel2.add(btnAggAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 412, -1, 110));
-
-        btnModificar.setBackground(new java.awt.Color(117, 36, 165));
-        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnModificarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnModificarMouseExited(evt);
-            }
-        });
-
-        txtVerDestinos1.setFont(new java.awt.Font("Corbel Light", 0, 24)); // NOI18N
-        txtVerDestinos1.setForeground(new java.awt.Color(255, 255, 255));
-        txtVerDestinos1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtVerDestinos1.setText("Modificar");
-
-        javax.swing.GroupLayout btnModificarLayout = new javax.swing.GroupLayout(btnModificar);
-        btnModificar.setLayout(btnModificarLayout);
-        btnModificarLayout.setHorizontalGroup(
-            btnModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnModificarLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(txtVerDestinos1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
-        btnModificarLayout.setVerticalGroup(
-            btnModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnModificarLayout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
-                .addComponent(txtVerDestinos1)
-                .addGap(17, 17, 17))
-        );
-
-        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 160, 70));
+        jPanel2.add(btnAggAdmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, -1, 110));
 
         btnVuelos.setBackground(new java.awt.Color(117, 36, 165));
         btnVuelos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -286,7 +217,7 @@ import proyectofinal.AltaUsuariosAdmin;
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jPanel2.add(btnVuelos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 160, 70));
+        jPanel2.add(btnVuelos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 160, 70));
 
         btnAggUsuarios1.setBackground(new java.awt.Color(117, 36, 165));
         btnAggUsuarios1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -323,7 +254,7 @@ import proyectofinal.AltaUsuariosAdmin;
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jPanel2.add(btnAggUsuarios1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, -1, -1));
+        jPanel2.add(btnAggUsuarios1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 500));
 
@@ -378,16 +309,6 @@ import proyectofinal.AltaUsuariosAdmin;
         btnVerDestinos.setBackground(Color.decode("#7524A5"));
     }//GEN-LAST:event_btnVerDestinosMouseExited
 
-    private void btnUsuariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuariosMouseEntered
-        // TODO add your handling code here:
-        btnUsuarios.setBackground(Color.decode("#AC35F2"));
-    }//GEN-LAST:event_btnUsuariosMouseEntered
-
-    private void btnUsuariosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuariosMouseExited
-        // TODO add your handling code here:
-        btnUsuarios.setBackground(Color.decode("#7524A5"));
-    }//GEN-LAST:event_btnUsuariosMouseExited
-
     private void btnAggAdminMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAggAdminMouseEntered
          btnAggAdmin.setBackground(Color.decode("#AC35F2"));
     }//GEN-LAST:event_btnAggAdminMouseEntered
@@ -396,25 +317,11 @@ import proyectofinal.AltaUsuariosAdmin;
         btnAggAdmin.setBackground(Color.decode("#7524A5"));
     }//GEN-LAST:event_btnAggAdminMouseExited
 
-    private void btnModificarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseEntered
-        btnModificar.setBackground(Color.decode("#AC35F2"));
-    }//GEN-LAST:event_btnModificarMouseEntered
-
-    private void btnModificarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseExited
-        btnModificar.setBackground(Color.decode("#7524A5"));
-    }//GEN-LAST:event_btnModificarMouseExited
-
     private void btnVuelosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVuelosMouseEntered
-        btnVuelos.setBackground(Color.decode("#AC35F2"));
-    }//GEN-LAST:event_btnVuelosMouseEntered
+        btnVuelos.setBackground(new java.awt.Color(153, 51, 255));    }//GEN-LAST:event_btnVuelosMouseEntered
 
     private void btnVuelosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVuelosMouseExited
-        btnVuelos.setBackground(Color.decode("#7524A5"));
-    }//GEN-LAST:event_btnVuelosMouseExited
-
-    private void btnVuelosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVuelosMouseClicked
-        ListaVuelos lista = new ListaVuelos();
-        lista.setVisible(true);    }//GEN-LAST:event_btnVuelosMouseClicked
+        btnVuelos.setBackground(new java.awt.Color(117, 36, 165));    }//GEN-LAST:event_btnVuelosMouseExited
 
     private void btnAggAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAggAdminMouseClicked
         RegristrarAdmin ventanaNuevoAdmin = new RegristrarAdmin();
@@ -434,14 +341,45 @@ import proyectofinal.AltaUsuariosAdmin;
         ventanaAlta.setVisible(true);
     }//GEN-LAST:event_btnAggUsuarios1MouseClicked
 
+    private void btnVuelosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVuelosMouseClicked
+        proyectofinal.navegacion.ListaVuelos ventana = new proyectofinal.navegacion.ListaVuelos();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnVuelosMouseClicked
+
+    private void btnVerDestinosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerDestinosMouseClicked
+    // MUESTRA LA VENTANA
+    javax.swing.JFrame ventanaDestinos = new javax.swing.JFrame("Destinos Disponibles");
+    ventanaDestinos.setSize(400, 300);
+    ventanaDestinos.setLocationRelativeTo(null);
+    
+    // CREARTABLA PARA EJCUTAR
+    javax.swing.JTable tabla = new javax.swing.JTable();
+    javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(new Object[]{"ID", "Nombre de la Ciudad"}, 0);
+    tabla.setModel(modelo);
+    
+    // LLENAR LA TABLA CON LOS DATOS DE LA BASE DE DATOS
+    String sql = "SELECT id_ciudad, nombre FROM ciudad ORDER BY id_ciudad ASC";
+    try (java.sql.Connection con = proyectofinal.ConexionBD.getConnection();
+         java.sql.Statement st = con.createStatement();
+         java.sql.ResultSet rs = st.executeQuery(sql)) {
+        
+        while (rs.next()) {
+            modelo.addRow(new Object[]{rs.getInt("id_ciudad"), rs.getString("nombre")});
+        }
+    } catch (java.sql.SQLException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar destinos: " + e.getMessage());
+    }
+    
+    ventanaDestinos.add(new javax.swing.JScrollPane(tabla));
+    ventanaDestinos.setVisible(true);
+    }//GEN-LAST:event_btnVerDestinosMouseClicked
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnAggAdmin;
     private javax.swing.JPanel btnAggUsuarios1;
     private javax.swing.JPanel btnCerrar;
-    private javax.swing.JPanel btnModificar;
-    private javax.swing.JPanel btnUsuarios;
     private javax.swing.JPanel btnVerDestinos;
     private javax.swing.JPanel btnVuelos;
     private javax.swing.JLabel closeText;
@@ -451,13 +389,11 @@ import proyectofinal.AltaUsuariosAdmin;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel txtFecha;
-    private javax.swing.JLabel txtUsuarios;
     private javax.swing.JLabel txtUsuarios1;
     private javax.swing.JLabel txtUsuarios2;
     private javax.swing.JLabel txtUsuarios3;
     private javax.swing.JLabel txtUsuarios4;
     private javax.swing.JLabel txtVerDestinos;
-    private javax.swing.JLabel txtVerDestinos1;
     private javax.swing.JLabel txtbienvenido;
     // End of variables declaration//GEN-END:variables
 }

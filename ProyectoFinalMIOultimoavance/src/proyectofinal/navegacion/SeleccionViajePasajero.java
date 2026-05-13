@@ -174,9 +174,9 @@ public class SeleccionViajePasajero extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        int fila = tablaViajes.getSelectedRow();
+    int fila = tablaViajes.getSelectedRow();
         if (fila != -1) {
-            int id = (int) tablaViajes.getValueAt(fila, 0);
+            int idVuelo = (int) tablaViajes.getValueAt(fila, 0);
             String origen = tablaViajes.getValueAt(fila, 1).toString();
             String destino = tablaViajes.getValueAt(fila, 2).toString();
             String num = tablaViajes.getValueAt(fila, 3).toString();
@@ -184,15 +184,16 @@ public class SeleccionViajePasajero extends javax.swing.JFrame {
             String lleg = tablaViajes.getValueAt(fila, 5).toString();
             double precio = Double.parseDouble(tablaViajes.getValueAt(fila, 6).toString());
 
-            Vuelo vueloElegido = new Vuelo(id, origen, destino, num, sal, lleg, precio);
+            Vuelo vueloElegido = new Vuelo(idVuelo, origen, destino, num, sal, lleg, precio);
 
             // APAGAMOS EL TIMER PORQUE YA ELIGIO UN VUELO
             timerActivo = false; 
 
-            PaginaPrincipalUsuario ventanaAsientos = new PaginaPrincipalUsuario(nombreUsuario, vueloElegido);
+           
+            PaginaPrincipalUsuario ventanaAsientos = new PaginaPrincipalUsuario(nombreUsuario, vueloElegido, idUsuario);
             ventanaAsientos.setVisible(true);
             this.dispose();
-            
+
         } else {
             JOptionPane.showMessageDialog(this, "Selecciona un vuelo de la tabla para continuar.");
         }

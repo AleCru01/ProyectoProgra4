@@ -16,129 +16,196 @@ import proyectofinal.Vuelo;
  * @author victo
  */
 public class PaginaPrincipalUsuario extends javax.swing.JFrame {
+    
     // Colores solicitados
-
     private final Color COLOR_DISPONIBLE = new Color(226, 130, 255); // Morado
     private final Color COLOR_RESERVADO = new Color(207, 27, 27);  // Rojo
     private final Color COLOR_SELECCIONADO = new Color(145, 224, 255);         // Azul
     private Vuelo vueloSeleccionado;
     private String nombreUsuario;
     private int idUsuario;
+    private String asientoElegido = null; // Para guardar el nombre del asiento (ej. "A10")
+    private String folioGenerado = null;  // Se VA A LLENAR al hacer la compra
+    private String nombreUsuarioActual;   // Para el PDF
 
-    public PaginaPrincipalUsuario(String usuario, Vuelo vuelo) {
-        this.nombreUsuario = nombreUsuario;
-        initComponents();
-        this.setLocationRelativeTo(null);
-        jPanel1.setSize(700, 500);
+    public PaginaPrincipalUsuario(String usuario, Vuelo vuelo, int id) {
+            this.nombreUsuario = usuario; 
+            this.vueloSeleccionado = vuelo;
+            initComponents();
+            this.setLocationRelativeTo(null);
 
-        jLabel2.setText("Bienvenido, " + usuario);
-        jLabel7.setText("Comprar Boletos: " + vuelo.getNumeroVuelo() + " (" + vuelo.getOrigen() + " - " + vuelo.getDestino() + ")");
-        inicializarAsientos();
-    }
+            jLabel2.setText("Bienvenido, " + usuario);
+            jLabel7.setText("Comprar Boletos: " + vuelo.getNumeroVuelo() + " (" + vuelo.getOrigen() + " - " + vuelo.getDestino() + ")");
+            inicializarAsientos();
+        }
 
     private void PasarPorEncima(JPanel panel) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     private void Salir(JPanel panel) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
-    private void gestionarSeleccionAsiento(JPanelRedondeado asiento) {
+  private void gestionarSeleccionAsiento(JPanelRedondeado asiento) {
         if (asiento.getBackground().equals(COLOR_RESERVADO)) {
             JOptionPane.showMessageDialog(this, "Este asiento ya está reservado.");
             return;
         }
+        
+        // Si el usuario elige uno nuevo
         if (asiento.getBackground().equals(COLOR_DISPONIBLE)) {
+            // Deseleccionar el anterior si solo permites uno por compra
+            deseleccionarTodos(); 
             asiento.setBackground(COLOR_SELECCIONADO);
+            this.asientoElegido = asiento.getName(); // Guardamos el nombre (ej: "asientoA0")
         } else {
             asiento.setBackground(COLOR_DISPONIBLE);
+            this.asientoElegido = null;
         }
         asiento.repaint();
     }
 
-    private void inicializarAsientos() {
-        Component[] componentes = Avion.getComponents();
-        int i = 0;
+    //PARA QUE NO elija 20 asientos a la vez
+    private void deseleccionarTodos() {
+        for (Component comp : Avion.getComponents()) {
+            if (comp instanceof JPanelRedondeado && comp.getBackground().equals(COLOR_SELECCIONADO)) {
+                comp.setBackground(COLOR_DISPONIBLE);
+            }
+        }
+    }
 
-        // 1. Todo a color disponible inicialmente
-        while (i < componentes.length) {
-            Component comp = componentes[i];
+  private void inicializarAsientos() {
+        Component[] componentes = Avion.getComponents();
+
+        // PONE todos los asientos en color DISPONIBLE (Morado) al inicio
+        for (Component comp : componentes) {
             if (comp instanceof JPanelRedondeado) {
                 comp.setBackground(COLOR_DISPONIBLE);
             }
-            i++;
         }
 
+        // SI EL VUELO NO SE CARGO NO BUSCAEN LA BD
         if (vueloSeleccionado == null) {
             return;
         }
 
-        // 2. Traer los ocupados desde la base de datos
-        String sql = "SELECT numero_asiento FROM reserva WHERE id_vuelo = ?";
-        try (Connection con = ConexionBD.getConnection(); PreparedStatement pst = con.prepareStatement(sql)) {
+        // TRAER los asientos ocupados desde la tabla 'boleto'
+        String sql = "SELECT numAsiento FROM boleto WHERE id_vuelo = ?";
+        
+        try (Connection con = ConexionBD.getConnection(); 
+             PreparedStatement pst = con.prepareStatement(sql)) {
 
             pst.setInt(1, vueloSeleccionado.getIdVuelo());
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
-                String asientoBD = rs.getString("numero_asiento");
+                String asientoBD = rs.getString("numAsiento");
 
-                int j = 0;
-                while (j < componentes.length) {
-                    Component comp = componentes[j];
+                // Buscamos CUAL DE LOS  en el diseño coincide con el de la BD
+                for (Component comp : componentes) {
                     if (comp instanceof JPanelRedondeado) {
-                        JPanelRedondeado asiento = (JPanelRedondeado) comp;
-                        // Validar si el nombre del JPanel coincide con la BD
-                        if (asientoBD != null && asientoBD.equals(asiento.getName())) {
-                            asiento.setBackground(COLOR_RESERVADO);
+                        JPanelRedondeado asientoUI = (JPanelRedondeado) comp;
+                        
+                        // Si el nombre del panel (ej. "asientoA0") coincide con lo guardado
+                        if (asientoBD != null && asientoBD.equals(asientoUI.getName())) {
+                            asientoUI.setBackground(COLOR_RESERVADO); // Lo pintamos de Rojo
                         }
                     }
-                    j++;
                 }
             }
+            
+            // Refrescamos el panel para que se vean los cambios
             Avion.repaint();
+            
         } catch (SQLException e) {
+            System.err.println("Error al inicializar asientos: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     private void confirmarReserva() {
-        String sql = "INSERT INTO reserva (id_usuario, id_vuelo, numero_asiento) VALUES (?, ?, ?)";
+        // Usamos la tabla 'boleto' que tienes en tu base de datos
+        String sql = "INSERT INTO boleto (id_vuelo, id_usuario, id_empleado, clase, folio, numAsiento, precio, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         int asientosReservados = 0;
 
         try (Connection con = ConexionBD.getConnection(); PreparedStatement pst = con.prepareStatement(sql)) {
 
             Component[] componentes = Avion.getComponents();
-            int k = 0;
+            
+            // Generamos un solo folio para esta transacción
+            String nuevoFolio = "AUR-" + (int)(Math.random() * 100000);
 
-            while (k < componentes.length) {
-                Component comp = componentes[k];
+            for (Component comp : componentes) {
                 if (comp instanceof JPanelRedondeado) {
                     JPanelRedondeado asiento = (JPanelRedondeado) comp;
 
+                    // Si el asiento esta en color AZUL (Seleccionado)
                     if (asiento.getBackground().equals(COLOR_SELECCIONADO)) {
-                        pst.setInt(1, idUsuario);
-                        pst.setInt(2, vueloSeleccionado.getIdVuelo());
-                        pst.setString(3, asiento.getName());
+                        
+                        pst.setInt(1, vueloSeleccionado.getIdVuelo()); // ID del vuelo que viene de la tabla anterior
+                        pst.setInt(2, idUsuario);                     // Tu ID de usuario (ej. 3 para Marissa)
+                        pst.setInt(3, 2);                              // ID de empleado por defecto (Admin)
+                        pst.setString(4, "Económica");                 // Clase del vuelo
+                        pst.setString(5, nuevoFolio);                  // El folio generado
+                        pst.setString(6, asiento.getName());           // El nombre del panel (ej. "asientoA0")
+                        pst.setDouble(7, vueloSeleccionado.getPrecio()); // El precio del objeto Vuelo
+                        pst.setString(8, "Confirmado");                // Estado del boleto
+
                         pst.executeUpdate();
 
+                        // Cambiamos el color a ROJO (Ocupado) inmediatamente
                         asiento.setBackground(COLOR_RESERVADO);
                         asientosReservados++;
                     }
                 }
-                k++;
             }
 
             if (asientosReservados > 0) {
-                JOptionPane.showMessageDialog(this, "¡Se reservaron " + asientosReservados + " asientos con éxito!");
+                // Guardamos el folio en la variable global para que el botón de PDF pueda usarlo
+                this.folioGenerado = nuevoFolio; 
+                
+                JOptionPane.showMessageDialog(this, "Compra Exitosa!\nFolio: " + nuevoFolio + "\nAsientos reservados: " + asientosReservados);
+                
+                // Opcional: Después de comprar, podemos llamar automáticamente al PDF
+                // generarPaseAbordar(nuevoFolio); 
+                
             } else {
-                JOptionPane.showMessageDialog(this, "Selecciona al menos un asiento (Color Azul).");
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona primero los asientos que deseas comprar (clic sobre ellos para ponerlos en azul).");
             }
+            
             Avion.repaint();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar reserva: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al guardar en la base de datos: " + e.getMessage());
+        }
+    }
+    
+    
+    private void generarPaseAbordar(String folio) {
+        com.itextpdf.text.Document documento = new com.itextpdf.text.Document();
+        try {
+            // SE GUARDA CON EL NOMBRE DEL FOLIO 
+            String ruta = System.getProperty("user.home") + "/Desktop/Boleto_" + folio + ".pdf";
+            com.itextpdf.text.pdf.PdfWriter.getInstance(documento, new java.io.FileOutputStream(ruta));
+            documento.open();
+
+            documento.add(new com.itextpdf.text.Paragraph("AURORA AIRLINES - CONFIRMACIÓN DE VIAJE"));
+            documento.add(new com.itextpdf.text.Paragraph("---------------------------------------"));
+            documento.add(new com.itextpdf.text.Paragraph("FOLIO: " + folio));
+            documento.add(new com.itextpdf.text.Paragraph("PASAJERO: " + jLabel2.getText().replace("Bienvenido, ", "")));
+            documento.add(new com.itextpdf.text.Paragraph("DETALLES: " + jLabel7.getText()));
+            documento.add(new com.itextpdf.text.Paragraph("ASIENTO: " + asientoElegido));
+            documento.add(new com.itextpdf.text.Paragraph("\n Gracias por elegir Aurora Airlines!"));
+
+            documento.close();
+            
+            // ABRIR AUTOMATICAMENTE
+            java.io.File archivo = new java.io.File(ruta);
+            java.awt.Desktop.getDesktop().open(archivo);
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al crear el PDF: " + e.getMessage());
         }
     }
 
@@ -162,13 +229,12 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         Fecha = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        btnVerBoleto = new javax.swing.JLabel();
+        btnImprimirPDF = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         AvionAsientos = new javax.swing.JPanel();
         Avion = new JPanelRedondeado();
         jPanel2 = new JPanelRedondeado();
-        jPanel6 = new JPanelRedondeado();
         asientoA0 = new JPanelRedondeado();
         asientoA1 = new JPanelRedondeado();
         asientoA2 = new JPanelRedondeado();
@@ -221,6 +287,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         asientoA48 = new JPanelRedondeado();
         asientoA51 = new JPanelRedondeado();
         asientoA50 = new JPanelRedondeado();
+        jPanel6 = new JPanelRedondeado();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -256,12 +323,12 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 0, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario.png"))); // NOI18N
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 20, 30, 30));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 30, 30));
 
-        jLabel2.setFont(new java.awt.Font("Corbel", 1, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Corbel", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(166, 85, 220));
         jLabel2.setText("Bienvenido, ");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
 
         menuOpciones.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -289,22 +356,20 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(Fecha)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(Fecha)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(79, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(Fecha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -318,24 +383,41 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Corbel Light", 0, 18)); // NOI18N
-        jLabel5.setText("Ver boletos");
+        btnVerBoleto.setFont(new java.awt.Font("Corbel Light", 0, 18)); // NOI18N
+        btnVerBoleto.setText("Ver boletos");
+        btnVerBoleto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVerBoletoMouseClicked(evt);
+            }
+        });
+
+        btnImprimirPDF.setFont(new java.awt.Font("Corbel Light", 0, 18)); // NOI18N
+        btnImprimirPDF.setText("Imprimir PDF");
+        btnImprimirPDF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnImprimirPDFMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(27, 27, 27))
+                .addContainerGap()
+                .addComponent(btnImprimirPDF)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addComponent(btnVerBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5)
+                .addComponent(btnVerBoleto, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnImprimirPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -348,24 +430,15 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Corbel Light", 0, 18)); // NOI18N
-        jLabel6.setText("Imprimir PDF");
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel6)
-                .addContainerGap(33, Short.MAX_VALUE))
+            .addGap(0, 34, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addContainerGap())
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout menuOpcionesLayout = new javax.swing.GroupLayout(menuOpciones);
@@ -402,29 +475,14 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
+            .addGap(0, 550, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 57, Short.MAX_VALUE)
         );
 
-        Avion.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 100, 570, -1));
-
-        jPanel6.setBackground(new java.awt.Color(199, 240, 255));
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 90, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        Avion.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, 90, 100));
+        Avion.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 550, -1));
 
         asientoA0.setBackground(new java.awt.Color(153, 255, 153));
         asientoA0.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -454,7 +512,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA0, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 30, 30));
+        Avion.add(asientoA0, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 30, 30));
 
         asientoA1.setBackground(new java.awt.Color(153, 255, 153));
         asientoA1.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -484,7 +542,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 30, 30));
+        Avion.add(asientoA1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 30, 30));
 
         asientoA2.setBackground(new java.awt.Color(153, 255, 153));
         asientoA2.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -514,7 +572,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 30, 30));
+        Avion.add(asientoA2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 30, 30));
 
         asientoA3.setBackground(new java.awt.Color(153, 255, 153));
         asientoA3.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -544,7 +602,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 30, 30));
+        Avion.add(asientoA3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 30, 30));
 
         asientoA6.setBackground(new java.awt.Color(153, 255, 153));
         asientoA6.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -574,7 +632,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 30, 30));
+        Avion.add(asientoA6, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, 30, 30));
 
         asientoA4.setBackground(new java.awt.Color(153, 255, 153));
         asientoA4.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -604,7 +662,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 30, 30));
+        Avion.add(asientoA4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 30, 30));
 
         asientoA5.setBackground(new java.awt.Color(153, 255, 153));
         asientoA5.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -634,7 +692,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 30, 30));
+        Avion.add(asientoA5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 30, 30));
 
         asientoA7.setBackground(new java.awt.Color(153, 255, 153));
         asientoA7.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -664,7 +722,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 30, 30));
+        Avion.add(asientoA7, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 30, 30));
 
         asientoA12.setBackground(new java.awt.Color(153, 255, 153));
         asientoA12.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -694,7 +752,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA12, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 30, 30));
+        Avion.add(asientoA12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, 30, 30));
 
         asientoA14.setBackground(new java.awt.Color(153, 255, 153));
         asientoA14.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -724,7 +782,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA14, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 30, 30));
+        Avion.add(asientoA14, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 30, 30));
 
         asientoA10.setBackground(new java.awt.Color(153, 255, 153));
         asientoA10.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -754,7 +812,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA10, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 60, 30, 30));
+        Avion.add(asientoA10, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 60, 30, 30));
 
         asientoA15.setBackground(new java.awt.Color(153, 255, 153));
         asientoA15.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -784,7 +842,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA15, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 30, 30));
+        Avion.add(asientoA15, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 30, 30));
 
         asientoA13.setBackground(new java.awt.Color(153, 255, 153));
         asientoA13.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -814,7 +872,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA13, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 30, 30));
+        Avion.add(asientoA13, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 30, 30));
 
         asientoA8.setBackground(new java.awt.Color(153, 255, 153));
         asientoA8.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -844,7 +902,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 30, 30));
+        Avion.add(asientoA8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, 30, 30));
 
         asientoA9.setBackground(new java.awt.Color(153, 255, 153));
         asientoA9.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -874,7 +932,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA9, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 30, 30));
+        Avion.add(asientoA9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 30, 30));
 
         asientoA11.setBackground(new java.awt.Color(153, 255, 153));
         asientoA11.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -904,7 +962,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, 30, 30));
+        Avion.add(asientoA11, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 30, 30));
 
         asientoA21.setBackground(new java.awt.Color(153, 255, 153));
         asientoA21.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -934,7 +992,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA21, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 30, 30));
+        Avion.add(asientoA21, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, 30, 30));
 
         asientoA16.setBackground(new java.awt.Color(153, 255, 153));
         asientoA16.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -964,7 +1022,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA16, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 30, 30));
+        Avion.add(asientoA16, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 30, 30));
 
         asientoA17.setBackground(new java.awt.Color(153, 255, 153));
         asientoA17.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -994,7 +1052,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA17, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 30, 30));
+        Avion.add(asientoA17, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, 30, 30));
 
         asientoA22.setBackground(new java.awt.Color(153, 255, 153));
         asientoA22.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1024,7 +1082,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA22, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 30, 30));
+        Avion.add(asientoA22, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 30, 30));
 
         asientoA23.setBackground(new java.awt.Color(153, 255, 153));
         asientoA23.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1054,7 +1112,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA23, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 30, 30));
+        Avion.add(asientoA23, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 30, 30));
 
         asientoA18.setBackground(new java.awt.Color(153, 255, 153));
         asientoA18.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1084,7 +1142,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA18, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 60, 30, 30));
+        Avion.add(asientoA18, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, 30, 30));
 
         asientoA19.setBackground(new java.awt.Color(153, 255, 153));
         asientoA19.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1114,7 +1172,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA19, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, 30, 30));
+        Avion.add(asientoA19, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 60, 30, 30));
 
         asientoA20.setBackground(new java.awt.Color(153, 255, 153));
         asientoA20.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1144,7 +1202,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA20, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 30, 30));
+        Avion.add(asientoA20, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, 30, 30));
 
         asientoA26.setBackground(new java.awt.Color(153, 255, 153));
         asientoA26.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1174,7 +1232,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA26, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 30, 30));
+        Avion.add(asientoA26, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, 30, 30));
 
         asientoA31.setBackground(new java.awt.Color(153, 255, 153));
         asientoA31.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1204,7 +1262,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA31, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 30, 30));
+        Avion.add(asientoA31, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 30, 30));
 
         asientoA25.setBackground(new java.awt.Color(153, 255, 153));
         asientoA25.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1234,7 +1292,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA25, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 30, 30));
+        Avion.add(asientoA25, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 30, 30));
 
         asientoA28.setBackground(new java.awt.Color(153, 255, 153));
         asientoA28.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1264,7 +1322,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA28, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 30, 30));
+        Avion.add(asientoA28, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 30, 30));
 
         asientoA30.setBackground(new java.awt.Color(153, 255, 153));
         asientoA30.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1294,7 +1352,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA30, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 30, 30));
+        Avion.add(asientoA30, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 30, 30));
 
         asientoA29.setBackground(new java.awt.Color(153, 255, 153));
         asientoA29.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1324,7 +1382,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA29, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 30, 30));
+        Avion.add(asientoA29, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 30, 30));
 
         asientoA24.setBackground(new java.awt.Color(153, 255, 153));
         asientoA24.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1354,7 +1412,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA24, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, 30, 30));
+        Avion.add(asientoA24, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 30, 30));
 
         asientoA27.setBackground(new java.awt.Color(153, 255, 153));
         asientoA27.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1384,7 +1442,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA27, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 30, 30));
+        Avion.add(asientoA27, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 30, 30));
 
         asientoA34.setBackground(new java.awt.Color(153, 255, 153));
         asientoA34.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1414,7 +1472,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA34, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, 30, 30));
+        Avion.add(asientoA34, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, 30, 30));
 
         asientoA32.setBackground(new java.awt.Color(153, 255, 153));
         asientoA32.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1444,7 +1502,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA32, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 30, 30));
+        Avion.add(asientoA32, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, 30, 30));
 
         asientoA33.setBackground(new java.awt.Color(153, 255, 153));
         asientoA33.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1474,7 +1532,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA33, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 30, 30));
+        Avion.add(asientoA33, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, 30, 30));
 
         asientoA37.setBackground(new java.awt.Color(153, 255, 153));
         asientoA37.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1504,7 +1562,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA37, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, 30, 30));
+        Avion.add(asientoA37, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 210, 30, 30));
 
         asientoA35.setBackground(new java.awt.Color(153, 255, 153));
         asientoA35.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1534,7 +1592,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA35, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 30, 30));
+        Avion.add(asientoA35, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 30, 30));
 
         asientoA36.setBackground(new java.awt.Color(153, 255, 153));
         asientoA36.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1564,7 +1622,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA36, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, 30, 30));
+        Avion.add(asientoA36, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 30, 30));
 
         asientoA38.setBackground(new java.awt.Color(153, 255, 153));
         asientoA38.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1594,7 +1652,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA38, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 210, 30, 30));
+        Avion.add(asientoA38, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 210, 30, 30));
 
         asientoA39.setBackground(new java.awt.Color(153, 255, 153));
         asientoA39.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1624,7 +1682,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA39, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 30, 30));
+        Avion.add(asientoA39, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 170, 30, 30));
 
         asientoA47.setBackground(new java.awt.Color(153, 255, 153));
         asientoA47.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1654,7 +1712,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA47, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 170, 30, 30));
+        Avion.add(asientoA47, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, 30, 30));
 
         asientoA41.setBackground(new java.awt.Color(153, 255, 153));
         asientoA41.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1684,7 +1742,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA41, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 30, 30));
+        Avion.add(asientoA41, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 210, 30, 30));
 
         asientoA45.setBackground(new java.awt.Color(153, 255, 153));
         asientoA45.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1714,7 +1772,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA45, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 210, 30, 30));
+        Avion.add(asientoA45, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 210, 30, 30));
 
         asientoA44.setBackground(new java.awt.Color(153, 255, 153));
         asientoA44.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1744,7 +1802,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA44, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 170, 30, 30));
+        Avion.add(asientoA44, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, 30, 30));
 
         asientoA43.setBackground(new java.awt.Color(153, 255, 153));
         asientoA43.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1774,7 +1832,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA43, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 210, 30, 30));
+        Avion.add(asientoA43, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 30, 30));
 
         asientoA46.setBackground(new java.awt.Color(153, 255, 153));
         asientoA46.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1804,7 +1862,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA46, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 30, 30));
+        Avion.add(asientoA46, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 210, 30, 30));
 
         asientoA42.setBackground(new java.awt.Color(153, 255, 153));
         asientoA42.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1834,7 +1892,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA42, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 170, 30, 30));
+        Avion.add(asientoA42, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 170, 30, 30));
 
         asientoA40.setBackground(new java.awt.Color(153, 255, 153));
         asientoA40.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1864,7 +1922,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA40, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, 30, 30));
+        Avion.add(asientoA40, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 30, 30));
 
         asientoA49.setBackground(new java.awt.Color(153, 255, 153));
         asientoA49.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1894,7 +1952,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA49, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, 30, 30));
+        Avion.add(asientoA49, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 170, 30, 30));
 
         asientoA48.setBackground(new java.awt.Color(153, 255, 153));
         asientoA48.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1924,7 +1982,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA48, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 210, 30, 30));
+        Avion.add(asientoA48, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 210, 30, 30));
 
         asientoA51.setBackground(new java.awt.Color(153, 255, 153));
         asientoA51.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1954,7 +2012,7 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA51, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, 30, 30));
+        Avion.add(asientoA51, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 210, 30, 30));
 
         asientoA50.setBackground(new java.awt.Color(153, 255, 153));
         asientoA50.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -1984,7 +2042,22 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
-        Avion.add(asientoA50, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 170, 30, 30));
+        Avion.add(asientoA50, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, 30, 30));
+
+        jPanel6.setBackground(new java.awt.Color(199, 240, 255));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70, Short.MAX_VALUE)
+        );
+
+        Avion.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, 70, -1));
 
         AvionAsientos.add(Avion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 650, 250));
 
@@ -2936,6 +3009,32 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_asientoA51MousePressed
 
+    private void btnVerBoletoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerBoletoMouseClicked
+        if (asientoElegido == null) {
+        JOptionPane.showMessageDialog(this, "Aun no has seleccionado ningun asiento.");
+        return;
+    }
+    
+    String mensaje = "      RESUMEN DETU VIAJE      \n" +
+                     "Pasajero: " + nombreUsuarioActual + "\n" +
+                     "Vuelo: " + vueloSeleccionado.getOrigen() + " -> " + vueloSeleccionado.getDestino() + "\n" +
+                     "Asiento: " + asientoElegido + "\n" +
+                     "Total a pagar: $" + vueloSeleccionado.getPrecio();
+                     
+    JOptionPane.showMessageDialog(this, mensaje, "Detalle del Boleto", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnVerBoletoMouseClicked
+
+    private void btnImprimirPDFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImprimirPDFMouseClicked
+        //VERIFICACION DE COMPRA DE BOLETO CON UN FOLIO GENERADO 
+    if (this.folioGenerado == null) {
+        JOptionPane.showMessageDialog(this, "Primero debes pulsar 'Comprar Boleto' para generar tu reserva.");
+        return;
+    }
+    
+    //LLAMAR AL METODO QUE CREA AL PDF
+    generarPaseAbordar(this.folioGenerado);
+    }//GEN-LAST:event_btnImprimirPDFMouseClicked
+
     /**
      * @param args the command line arguments<
      */
@@ -2997,13 +3096,13 @@ public class PaginaPrincipalUsuario extends javax.swing.JFrame {
     private javax.swing.JPanel asientoA7;
     private javax.swing.JPanel asientoA8;
     private javax.swing.JPanel asientoA9;
+    private javax.swing.JLabel btnImprimirPDF;
+    private javax.swing.JLabel btnVerBoleto;
     private javax.swing.JLabel closeText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

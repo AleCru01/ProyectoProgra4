@@ -113,7 +113,7 @@ private void ajustarLogo() {
 
         txtNombre.setFont(new java.awt.Font("Corbel Light", 0, 14)); // NOI18N
         txtNombre.setText(" Ingrese");
-        txtNombre.setBorder(null);
+        txtNombre.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(129, 39, 189)));
         txtNombre.setCaretColor(new java.awt.Color(153, 153, 153));
         txtNombre.setMinimumSize(new java.awt.Dimension(64, 24));
         txtNombre.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -130,7 +130,7 @@ private void ajustarLogo() {
 
         txtApellido.setFont(new java.awt.Font("Corbel Light", 0, 14)); // NOI18N
         txtApellido.setText("Ingrese");
-        txtApellido.setBorder(null);
+        txtApellido.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(129, 39, 189)));
         jPanel2.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 90, 25));
 
         jLabelFechaNac.setFont(new java.awt.Font("Leelawadee", 1, 18)); // NOI18N
@@ -140,7 +140,7 @@ private void ajustarLogo() {
 
         txtFechaNac.setFont(new java.awt.Font("Corbel Light", 0, 14)); // NOI18N
         txtFechaNac.setText("yyyy-mm-dd");
-        txtFechaNac.setBorder(null);
+        txtFechaNac.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(129, 39, 189)));
         jPanel2.add(txtFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 100, 25));
 
         jLabelNacionalidad.setFont(new java.awt.Font("Leelawadee", 1, 18)); // NOI18N
@@ -150,7 +150,7 @@ private void ajustarLogo() {
 
         txtNacionalidad.setFont(new java.awt.Font("Corbel Light", 0, 14)); // NOI18N
         txtNacionalidad.setText("Ingrese");
-        txtNacionalidad.setBorder(null);
+        txtNacionalidad.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(129, 39, 189)));
         jPanel2.add(txtNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, 90, 25));
 
         jLabel1.setText("  ");
@@ -164,7 +164,7 @@ private void ajustarLogo() {
         txtPasaporte.setFont(new java.awt.Font("Corbel Light", 0, 14)); // NOI18N
         txtPasaporte.setText("Ingrese");
         txtPasaporte.setToolTipText("");
-        txtPasaporte.setBorder(null);
+        txtPasaporte.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(129, 39, 189)));
         txtPasaporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPasaporteActionPerformed(evt);
@@ -179,7 +179,7 @@ private void ajustarLogo() {
 
         txtCorreo.setFont(new java.awt.Font("Corbel Light", 0, 14)); // NOI18N
         txtCorreo.setText("ejemplo@gmail.com");
-        txtCorreo.setBorder(null);
+        txtCorreo.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(129, 39, 189)));
         jPanel2.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, 80, 25));
 
         jLabelTelefono.setFont(new java.awt.Font("Leelawadee", 1, 18)); // NOI18N
@@ -189,7 +189,7 @@ private void ajustarLogo() {
 
         txtTelefono.setFont(new java.awt.Font("Corbel Light", 0, 14)); // NOI18N
         txtTelefono.setText("Ingrese");
-        txtTelefono.setBorder(null);
+        txtTelefono.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(129, 39, 189)));
         jPanel2.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 100, 25));
 
         jLabelUsuario.setFont(new java.awt.Font("Leelawadee", 1, 18)); // NOI18N
@@ -199,7 +199,7 @@ private void ajustarLogo() {
 
         txtUsuario.setFont(new java.awt.Font("Corbel Light", 0, 14)); // NOI18N
         txtUsuario.setText("Ingrese");
-        txtUsuario.setBorder(null);
+        txtUsuario.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(129, 39, 189)));
         jPanel2.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 90, 25));
 
         jLabelContra.setFont(new java.awt.Font("Leelawadee", 1, 18)); // NOI18N
@@ -210,7 +210,7 @@ private void ajustarLogo() {
         txtContrasena.setFont(new java.awt.Font("Corbel Light", 0, 14)); // NOI18N
         txtContrasena.setForeground(new java.awt.Color(204, 204, 204));
         txtContrasena.setText("***********");
-        txtContrasena.setBorder(null);
+        txtContrasena.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(129, 39, 189)));
         jPanel2.add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 130, 30));
 
         btnRegistrar.setBackground(new java.awt.Color(117, 36, 165));
@@ -233,7 +233,7 @@ private void ajustarLogo() {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo blanco def ahora si.jpg"))); // NOI18N
         jLabel4.setMaximumSize(new java.awt.Dimension(200, 200));
         jLabel4.setPreferredSize(new java.awt.Dimension(200, 200));
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 140, 110));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 110));
 
         jLabelFechaNac1.setFont(new java.awt.Font("Leelawadee", 1, 18)); // NOI18N
         jLabelFechaNac1.setForeground(new java.awt.Color(117, 36, 165));
